@@ -7,10 +7,10 @@ var start_time;
 var time_elapsed;
 var interval;
 
-$(document).ready(function() {
-	context = canvas.getContext("2d");
-	Start();
-});
+// $(document).ready(function() {
+// 	context = canvas.getContext("2d");
+// 	Start();
+// });
 
 function Start() {
 	board = new Array();
@@ -169,4 +169,52 @@ function UpdatePosition() {
 	} else {
 		Draw();
 	}
+}
+
+function Welcome()
+{
+	$(".screen").hide();
+	$("#welcome_menu").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(0).addClass("active"); // eq(0) = 1st menu item
+}
+
+function Register()
+{
+	$(".screen").hide();
+	$("#register_menu").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(1).addClass("active"); // eq(1) = 1st menu item
+}
+
+function Login()
+{
+	$(".screen").hide();
+	$("#log_menu").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(2).addClass("active"); // eq(2) = 1st menu item
+}
+
+function Setting()
+{
+	$(".screen").hide();
+	$("#setting").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
+}
+
+function About()
+{
+	$(".screen").hide();
+	$("#about").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
+}
+
+function Game_page()
+{
+	$(".screen").hide();
+	$("#game_page").show();
+	// $(".menu").removeClass("active");
+	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
 }

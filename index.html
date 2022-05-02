@@ -1,12 +1,78 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Pacman</title>
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+		<!-- <link rel="stylesheet" type="text/css" href="./css/style.css">
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+		<link rel="stylesheet" type="text/css" href="./css/style.css"> -->
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
 	</head>
 
 	<body>
-		<div id="score">
+		<header>
+			<div class="menu">
+				<a href="Walcome"></a>
+				<a href="Walcome"></a>
+				<a href="Walcome"></a>
+				<a href="Walcome"></a>
+			</div>
+		</header>
+
+
+
+		<div id="content">
+			<div class="screen" id="welcome_menu">
+				<button type="button" onclick="Register()">
+					Register
+				</button>
+				<button type="button" onclick="Login()">
+					Login
+				</button>
+			</div>
+
+			<div class="screen" id="register_menu">
+				<form >
+					<input type="text" id="username" placeholder="Choose your username">
+					<input type="text" id="password" placeholder="Choose your password">
+					<input type="text" id="full_name" placeholder="Enter your full name">
+					<input type="email" id="email" placeholder="Enter your email">
+					<input type="text" id="date" placeholder="Enter your date">
+					<button></button>
+				</form>
+			</div>
+			<div class="screen" id="login_menu">
+				<form >
+					<input type="text" id="username" placeholder="Enter your username">
+					<input type="text" id="password" placeholder="Enter your password">
+				</form>
+			</div>
+
+			<div class="screen" id="login_menu">
+				<form >
+					<input type="text" id="username" placeholder="Enter your username">
+					<input type="text" id="password" placeholder="Enter your password">
+				</form>
+			</div>
+
+			<div class="screen" id="login_menu">
+				<form >
+					<input type="text" id="username" placeholder="Enter your username">
+					<input type="text" id="password" placeholder="Enter your password">
+				</form>
+			</div>
+
+			<div class="screen" id="login_menu">
+				<form >
+					<input type="text" id="username" placeholder="Enter your username">
+					<input type="text" id="password" placeholder="Enter your password">
+				</form>
+			</div>
+
+		</div>
+
+		<!-- <div id="score">
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
 		</div>
@@ -16,6 +82,10 @@
 		</div>
 		<div id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
-		</div>
+		</div> -->
+
+		<footer>
+			avichaie@post.bgu.ac.il, hshah@post.bgu.ac.il.
+		</footer>
 	</body>
 </html>

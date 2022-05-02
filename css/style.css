@@ -1,0 +1,13 @@
+body
+{
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(./Images/pacman2.jpg);
+}
+
+#canvas
+{
+    width: 100vh;
+    height: 80vh;
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Pacman</title>
+		
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<!-- <link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -12,13 +12,19 @@
 
 	<body>
 		<header>
-			<div class="menu">
-				<a href="Walcome"></a>
-				<a href="Walcome"></a>
-				<a href="Walcome"></a>
-				<a href="Walcome"></a>
-			</div>
+			<title>Pacman</title>
+			<menu>
+				<a href="#welcome" onclick="Welcome()">Walcome</a>
+				<a href="#register" onclick="Register()">Register</a>
+				<a href="#login" onclick="Login()">Login</a>
+				<a href="#Game" onclick="Game_page()">Game</a>
+				<a href="#Help">help</a>
+			</menu>
 		</header>
+
+		<menu>
+
+		</menu>
 
 
 
@@ -39,7 +45,7 @@
 					<input type="text" id="full_name" placeholder="Enter your full name">
 					<input type="email" id="email" placeholder="Enter your email">
 					<input type="text" id="date" placeholder="Enter your date">
-					<button></button>
+					<button type="button"></button>
 				</form>
 			</div>
 			<div class="screen" id="login_menu">
@@ -49,41 +55,34 @@
 				</form>
 			</div>
 
-			<div class="screen" id="login_menu">
+			<div class="screen" id="setting_menu">
 				<form >
 					<input type="text" id="username" placeholder="Enter your username">
 					<input type="text" id="password" placeholder="Enter your password">
 				</form>
 			</div>
 
-			<div class="screen" id="login_menu">
+			<div class="screen" id="about_menu">
 				<form >
 					<input type="text" id="username" placeholder="Enter your username">
 					<input type="text" id="password" placeholder="Enter your password">
 				</form>
 			</div>
 
-			<div class="screen" id="login_menu">
-				<form >
-					<input type="text" id="username" placeholder="Enter your username">
-					<input type="text" id="password" placeholder="Enter your password">
-				</form>
+			<div class="screen" id="game_page">
+				<div id="score">
+					<label for="lblScore">SCORE:</label>
+					<input id="lblScore" type="text" />
+				</div>
+				<div id="time">
+					<label for="lblTime">TIME:</label>
+					<input id="lblTime" type="text" />
+				</div>
+				<div id="game">
+					<canvas id="canvas" height="600" width="600"></canvas>
+				</div>
 			</div>
-
 		</div>
-
-		<!-- <div id="score">
-			<label for="lblScore">SCORE:</label>
-			<input id="lblScore" type="text" />
-		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
-			<input id="lblTime" type="text" />
-		</div>
-		<div id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
-		</div> -->
-
 		<footer>
 			avichaie@post.bgu.ac.il, hshah@post.bgu.ac.il.
 		</footer>

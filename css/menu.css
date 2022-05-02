@@ -1,0 +1,12 @@
+menu
+{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    width: 20vh;
+}
+
+menu a
+{
+    flex-grow: 1;
+}

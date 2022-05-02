@@ -1,9 +1,9 @@
 body
 {
-    background-color: white;
+    background-color: black;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url(./Images/pacman2.jpg);
+    background-size:cover;
+    background-image: url("../Images/pacman4.jpg");
 }
 
 #canvas

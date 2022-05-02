@@ -7,12 +7,15 @@ var start_time;
 var time_elapsed;
 var interval;
 
+
+
 // $(document).ready(function() {
 // 	context = canvas.getContext("2d");
 // 	Start();
 // });
 
 function Start() {
+
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
@@ -215,6 +218,13 @@ function Game_page()
 {
 	$(".screen").hide();
 	$("#game_page").show();
+	context = canvas.getContext("2d");
+	Start()
+
+	// $(document).ready(function() {
+	// 	context = canvas.getContext("2d");
+	// 	Start();
+	// });
 	// $(".menu").removeClass("active");
 	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
 }

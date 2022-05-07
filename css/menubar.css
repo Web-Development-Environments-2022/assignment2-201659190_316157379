@@ -1,0 +1,33 @@
+
+.navbar
+{
+    color: white;
+    display: flex;
+}
+
+
+.menubar
+{
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.menubar a
+{
+    padding-right: 3vh;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.menubar a::after, .menubar a::before
+{
+    color: white;
+}
+
+.menubar a:hover
+{
+    background-color: #ddd;
+    color: black;
+}
+

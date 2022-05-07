@@ -9,10 +9,15 @@ var interval;
 
 
 
-// $(document).ready(function() {
-// 	context = canvas.getContext("2d");
-// 	Start();
-// });
+$(document).ready(function() 
+{
+	$("#register_from").validate();
+	$("#login_form").validate();
+	Welcome();
+
+	// context = canvas.getContext("2d");
+	// Start();
+});
 
 function Start() {
 
@@ -178,8 +183,8 @@ function Welcome()
 {
 	$(".screen").hide();
 	$("#welcome_menu").show();
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(0).addClass("active"); // eq(0) = 1st menu item
+	$(".menubar").removeClass("active");
+	$(".menubar").eq(0).addClass("active"); // eq(0) = 1st menu item
 }
 
 function Register()
@@ -193,7 +198,7 @@ function Register()
 function Login()
 {
 	$(".screen").hide();
-	$("#log_menu").show();
+	$("#login_menu").show();
 	// $(".menu").removeClass("active");
 	// $(".menu").eq(2).addClass("active"); // eq(2) = 1st menu item
 }
@@ -220,11 +225,16 @@ function Game_page()
 	$("#game_page").show();
 	context = canvas.getContext("2d");
 	Start()
-
-	// $(document).ready(function() {
-	// 	context = canvas.getContext("2d");
-	// 	Start();
-	// });
 	// $(".menu").removeClass("active");
 	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
+}
+
+function validate_registration()
+{
+	$("#register_from").validate();
+}
+
+function validate_login()
+{
+	$("#login_form").validate();
 }

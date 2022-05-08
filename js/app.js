@@ -7,12 +7,14 @@ var start_time;
 var time_elapsed;
 var interval;
 
+var active_user;
+
 
 
 $(document).ready(function() 
 {
-	$("#register_from").validate();
-	$("#login_form").validate();
+	checkRegisteration();
+	checkLogin();
 	Welcome();
 
 	// context = canvas.getContext("2d");
@@ -203,6 +205,18 @@ function Login()
 	// $(".menu").eq(2).addClass("active"); // eq(2) = 1st menu item
 }
 
+function afterLogin()
+{
+	//clear the inputs after submit
+	$('#login_form').each(function()
+	{
+		this.reset();
+	});
+	$(".screen").hide();
+	$("#after_login").show();
+}
+
+
 function Setting()
 {
 	$(".screen").hide();
@@ -229,12 +243,15 @@ function Game_page()
 	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
 }
 
-function validate_registration()
+function NewUser()
 {
-	$("#register_from").validate();
-}
-
-function validate_login()
-{
-	$("#login_form").validate();
+	//clear the inputs after submit
+	$('#register_form').each(function()
+	{
+		this.reset();
+	});
+	addUser();
+	alert(users)
+	$(".screen").hide();
+	$("#welcome_menu").show();
 }

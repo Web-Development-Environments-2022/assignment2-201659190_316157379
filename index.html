@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>Pacman</title>
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/menubar.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
 		<!-- <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
-		<script src="./jquery-3.4.1.slim.min.js"></script>
+		<script src="/js/app.js"></script>
+
+		<script src="/js/jquery-3.4.1.slim.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+		<script type="text/javascript" src="/js/app.js"></script>
+		<script type="text/javascript" src="/js/gameDB.js"></script>
+		<script type="text/javascript" src="/js/validation.js"></script>
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="./app.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.css">  
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css">  
+
 	</head>
 
 	<body>
 		<header>
 			<nav class="navbar">
 				<menu class="menubar">
-					<!-- <img id="logo" src="./Images/pacman5.jpg" alt=""> -->
+					<i class="fa-solid fa-ghost" id="icon"></i>
 					<a href="#welcome" onclick="Welcome()">Walcome</a>
 					<a href="#register" onclick="Register()">Register</a>
 					<a href="#login" onclick="Login()">Login</a>
-					<a href="#Game" onclick="Game_page()">Game</a>
+					<!-- <a href="#Game" onclick="Game_page()">Game</a> -->
 					<a href="#Help">help</a>
 				</menu>
 			</nav>
@@ -42,71 +52,85 @@
 			</div>
 
 			<div class="screen" id="register_menu">
-				<form id="register_from" action="" method="post">
+				<form id= "register_form" action="" method="post" novalidate="novalidate">
 					<h1>Registeration</h1>
-					<label for="reg_username"><b>username:</b></label>
-					<input type="text" id="reg_username" placeholder="Choose your username" required>
+					<label for="reg_username"><b>Username:</b></label>
+					<input type="text" name="reg_username" id="reg_username" placeholder="Choose your username">
 					<br>
-					<label for="reg_password"><b>password:</b></label>
-					<input type="text" id="reg_password" placeholder="Choose your password" required>
+					<label for="reg_password"><b>Password:</b></label>
+					<input type="password" name="reg_password" id="reg_password" placeholder="Choose your password" checkPassword="checkPassword">
 					<br>
-					<label for="full_name"><b>full name:</b></label>
-					<input type="text" id="full_name" placeholder="Enter your full name" required>
+					<label for="first_name"><b>First name:</b></label>
+					<input type="text" name="first_name" id="first_name" placeholder="Enter your first name" checkName="checkName">
 					<br>
-					<label for="email"><b>email:</b></label>
-					<input type="email" id="email" placeholder="Enter your email" required>
+					<label for="last_name"><b>Last name:</b></label>
+					<input type="text" name="last_name" id="last_name" placeholder="Enter your last name" checkName="checkName">
 					<br>
-					<label for="date"><b>date:</b></label>
-					<input type="text" id="date" placeholder="Enter your birthdate" required>
+					<label for="email"><b>Email:</b></label>
+					<input type="email" name="email" id="email" placeholder="Enter your email">
 					<br>
-					<button type="button" onclick="validate_registration()">OK</button>
+					<label for="date"><b>Date:</b></label>
+					<input type="date" name="date" id="date" placeholder="Enter your birthdate">
+					<br>
+					<button type="submit" >OK</button>
 					<button type="button" onclick="Welcome()">return to menu</button>
 				</form>
 			</div>
 
 			<div class="screen" id="login_menu">
-				<form id="login_form" action="" method="post">
+				<form id="login_form" action="" method="post" novalidate="novalidate">
 					<h1>Login</h1>
 					<label for="username"><b>username:</b></label>
-					<input type="text" id="username" placeholder="Enter your username" required>
+					<input type="text" name="username" id="username" placeholder="Enter your username">
 					<br>
 					<label for="password"><b>password:</b></label>
-					<input type="text" id="password" placeholder="Enter your password" required>
+					<input type="password" name="password" id="password" placeholder="Enter your password">
 					<br>
-					<button type="button" onclick="validate_login()">OK</button>
+					<button type="submit" >OK</button>
 					<button type="button" onclick="Welcome()">return to menu</button>
 				</form>
 			</div>
 			
-			<div class="after_login">
-				<div class="screen" id="setting_menu">
-					<form >
-						<input type="text" id="username" placeholder="Enter your username">
-						<input type="text" id="password" placeholder="Enter your password">
-					</form>
+			<div class="screen" id="after_login">
+				<form id="after_login_form" action="" method="post">
+					<button type="button">Game</button>
+					<br>
+					<button type="button">Setting</button>
+					<br>
+					<button type="button">logout</button>
+					<br>
+					<button type="button">about</button>
+				</form>
+			</div>
+
+			<div class="screen" id="setting_menu">
+				<form >
+					<!-- <input type="text" id="username" placeholder="Enter your username">
+					<input type="password" id="password" placeholder="Enter your password"> -->
+				</form>
+			</div>
+
+			<div class="screen" id="about_menu">
+				<form >
+					<!-- <input type="text" id="username" placeholder="Enter your username">
+					<input type="password" id="password" placeholder="Enter your password"> -->
+				</form>
+			</div>
+
+			<div class="screen" id="game_page">
+				<div id="score">
+					<label for="lblScore">SCORE:</label>
+					<input id="lblScore" type="text" />
 				</div>
-	
-				<div class="screen" id="about_menu">
-					<form >
-						<input type="text" id="username" placeholder="Enter your username">
-						<input type="text" id="password" placeholder="Enter your password">
-					</form>
+				<div id="time">
+					<label for="lblTime">TIME:</label>
+					<input id="lblTime" type="text" />
 				</div>
-	
-				<div class="screen" id="game_page">
-					<div id="score">
-						<label for="lblScore">SCORE:</label>
-						<input id="lblScore" type="text" />
-					</div>
-					<div id="time">
-						<label for="lblTime">TIME:</label>
-						<input id="lblTime" type="text" />
-					</div>
-					<div id="game">
-						<canvas id="canvas" height="600" width="600"></canvas>
-					</div>
+				<div id="game">
+					<canvas id="canvas" height="600" width="600"></canvas>
 				</div>
 			</div>
+			
 
 			
 		</div>

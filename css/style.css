@@ -3,14 +3,14 @@
 
 body
 {
-    /* background-color: white;
+    background-color: white;
     background-repeat: no-repeat;
-    background-size:cover;
-    background-image: url("../Images/pacman3.jpg");
-    background-attachment: relative; */
-    /* text-align: center; */
-    font-size: 2vh;
-
+    background-image: url("../Images/pacman8.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position:center;
+    text-align: center;
+    color: white;
 }
 
 
@@ -28,8 +28,7 @@ footer
     padding: 1vh 1vh 1vh 1vh;
     bottom: 0;
     width: 100%;
-    height: 2vh;
-    background: gray;
+    /* background: gray; */
     font-size: 2vh;
 }
 
@@ -44,13 +43,9 @@ footer
 /* welcome menu */
 #welcome_menu
 {
-    text-align: center;
     margin-top: 20vh;
     margin-bottom: 20vh;
-    border-style: solid;
-    border-radius: 10vh;
     padding-bottom: 5vh;
-    /* max-width: 50vh; */
     margin-left: 75vh;
     margin-right: 60vh;
 }
@@ -58,14 +53,14 @@ footer
 #menu_form
 {
     display: inline-block;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 
 #menu_form button
 {
     width: 15vh;
-    height: 8vh;
+    height: 4vh;
     margin-bottom: 1vh;
 }
 
@@ -83,29 +78,28 @@ footer
 
 #register_menu
 {
-    text-align: center;
     margin-top: 20vh;
     margin-bottom: 20vh;
-    border-style: solid;
-    border-radius: 10vh;
+    /* border-style: solid;
+    border-radius: 10vh; */
     padding-bottom: 5vh;
     margin-left: 75vh;
     margin-right: 60vh;
 }
 
-#register_from input
+#register_form input
 {
     font-size: 3vh;
     margin-bottom: 1vh;
     width: 32vh;
 }
 
-#register_from label
+#register_form label
 {
     font-size: 3vh;
 }
 
-#register_from button
+#register_form button
 {
     font-size: 2vh;
     margin-left: 2vh;
@@ -117,11 +111,10 @@ footer
 
 #login_menu
 {
-    text-align: center;
     margin-top: 20vh;
     margin-bottom: 20vh;
-    border-style: solid;
-    border-radius: 10vh;
+    /* border-style: solid;
+    border-radius: 10vh; */
     padding-bottom: 5vh;
     margin-left: 75vh;
     margin-right: 60vh;

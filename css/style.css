@@ -28,6 +28,7 @@ footer
     padding: 1vh 1vh 1vh 1vh;
     bottom: 0;
     width: 100%;
+    margin-left: 15vh;
     /* background: gray; */
     font-size: 2vh;
 }
@@ -53,7 +54,6 @@ footer
 #menu_form
 {
     display: inline-block;
-    /* box-sizing: border-box; */
 }
 
 
@@ -75,13 +75,10 @@ footer
 }
 
 /* register menu*/
-
 #register_menu
 {
     margin-top: 20vh;
     margin-bottom: 20vh;
-    /* border-style: solid;
-    border-radius: 10vh; */
     padding-bottom: 5vh;
     margin-left: 75vh;
     margin-right: 60vh;
@@ -108,13 +105,10 @@ footer
 
 
 /* login menu*/
-
 #login_menu
 {
     margin-top: 20vh;
     margin-bottom: 20vh;
-    /* border-style: solid;
-    border-radius: 10vh; */
     padding-bottom: 5vh;
     margin-left: 75vh;
     margin-right: 60vh;
@@ -137,4 +131,74 @@ footer
     font-size: 2vh;
     margin-left: 2vh;
     margin-top: 3vh;
+}
+
+
+
+/* after login menu */
+#after_login
+{
+    margin-top: 20vh;
+    margin-bottom: 20vh;
+    padding-bottom: 5vh;
+    margin-left: 75vh;
+    margin-right: 60vh;
+}
+
+#after_login_form
+{
+    display: inline-block;
+}
+
+
+#after_login_form button
+{
+    width: 15vh;
+    height: 4vh;
+    margin-bottom: 1vh;
+}
+
+#after_login_form button:hover
+{
+    background-color: aqua;
+}
+
+#after_login_form h2
+{
+    margin-top: -1.5vh;
+}
+
+
+
+/* setting menu */
+#setting_menu
+{
+    margin-top: 20vh;
+    margin-bottom: 20vh;
+    padding-bottom: 5vh;
+    margin-left: 75vh;
+    margin-right: 60vh;
+}
+
+#setting_menu_form
+{
+    display: inline-block;
+}
+
+
+#setting_menu_form button
+{
+    width: 15vh;
+    height: 4vh;
+    margin-bottom: 1vh;
+}
+
+#setting_menu_form button:hover
+{
+    background-color: aqua;
+}
+
+#setting_menu_form h2
+{
+    margin-top: -1.5vh;
 }

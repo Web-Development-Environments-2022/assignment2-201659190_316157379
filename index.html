@@ -6,11 +6,23 @@
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/menubar.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
-		<!-- <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
 		<script src="/js/app.js"></script>
 
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
-		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
+		<!-- Model jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+		<!-- <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script> -->
+		<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+		<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script> -->
+		<!-- <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
+		<!-- not working yet -->
+
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/gameDB.js"></script>
 		<script type="text/javascript" src="/js/validation.js"></script>
@@ -29,8 +41,7 @@
 					<a href="#welcome" onclick="Welcome()">Walcome</a>
 					<a href="#register" onclick="Register()">Register</a>
 					<a href="#login" onclick="Login()">Login</a>
-					<!-- <a href="#Game" onclick="Game_page()">Game</a> -->
-					<a href="#Help">help</a>
+					<a href="#about" onclick="About()">About</a>
 				</menu>
 			</nav>
 		</header>
@@ -47,6 +58,10 @@
 					<br>
 					<button type="button" onclick="Login()">
 						Login
+					</button>
+					<br>
+					<button type="button" onclick="About()">
+						About
 					</button>
 				</form>
 			</div>
@@ -86,35 +101,45 @@
 					<label for="password"><b>password:</b></label>
 					<input type="password" name="password" id="password" placeholder="Enter your password">
 					<br>
-					<button type="submit" >OK</button>
+					<button type="submit">OK</button>
 					<button type="button" onclick="Welcome()">return to menu</button>
 				</form>
 			</div>
 			
 			<div class="screen" id="after_login">
 				<form id="after_login_form" action="" method="post">
-					<button type="button">Game</button>
+					<h1 id="userToPut"></h1>
+					<button type="button" onclick="Game_page()">Game</button>
 					<br>
-					<button type="button">Setting</button>
+					<button type="button" onclick="Setting()">Setting</button>
 					<br>
-					<button type="button">logout</button>
+					<button type="button" onclick="Logout()">logout</button>
 					<br>
-					<button type="button">about</button>
+					<button type="button" onclick="About()">about</button>
 				</form>
 			</div>
 
 			<div class="screen" id="setting_menu">
-				<form >
-					<!-- <input type="text" id="username" placeholder="Enter your username">
-					<input type="password" id="password" placeholder="Enter your password"> -->
+				<form id="setting_menu_form">
+					<h1>Setting</h1>
+					UP: 
+					<button id="up_button" type="button" onclick="UpButton()"></button>
+					<br>
+					DOWN:
+					<button id="down_button" type="button" onclick="DownButton()"></button>
+					<br>
+					RIGHT:
+					<button id="right_button" type="button" onclick="RightButton()"></button>
+					<br>
+					LEFT
+					<button id="left_button"type="button" onclick="LeftButton()"></button>
+					<br>
+					<button type="button" onclick="Welcome()">return to menu</button>
 				</form>
 			</div>
 
 			<div class="screen" id="about_menu">
-				<form >
-					<!-- <input type="text" id="username" placeholder="Enter your username">
-					<input type="password" id="password" placeholder="Enter your password"> -->
-				</form>
+				<p>testtttttttttttttttttttttttttttttttt</p>
 			</div>
 
 			<div class="screen" id="game_page">
@@ -135,7 +160,7 @@
 			
 		</div>
 		<footer>
-			avichaie@post.bgu.ac.il, hshah@post.bgu.ac.il.
+			avichaie@post.bgu.ac.il, hshah@post.bgu.ac.il, inbarza@post.bgu.ac.il.
 		</footer>
 	</body>
 </html>

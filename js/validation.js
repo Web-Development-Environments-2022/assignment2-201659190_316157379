@@ -1,13 +1,6 @@
-function checkLogin()
+function validateLoginInput()
 {
-    $.validator.addMethod("checkUsername", function(v, ele, param)
-    {
-        // if ((/[A-Z]/.test(v) && /[0-9]/.test(v)))
-        // {
-        //     return true;
-        // }
-        // return false;
-    }, "<br>password must have at least 1 uppercase and 1 number<br>")
+
     $("#login_form").validate({
         rules: 
         {
@@ -21,7 +14,7 @@ function checkLogin()
         },
         submitHandler: function()
         {
-            afterLogin();
+            CheckLogin();
         }
     });
 }

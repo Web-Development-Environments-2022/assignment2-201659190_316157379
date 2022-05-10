@@ -7,18 +7,15 @@ var start_time;
 var time_elapsed;
 var interval;
 
-var active_user;
+var current_user = "";
 
 
 
 $(document).ready(function() 
 {
 	checkRegisteration();
-	checkLogin();
+	validateLoginInput();
 	Welcome();
-
-	// context = canvas.getContext("2d");
-	// Start();
 });
 
 function Start() {
@@ -183,75 +180,208 @@ function UpdatePosition() {
 
 function Welcome()
 {
-	$(".screen").hide();
-	$("#welcome_menu").show();
-	$(".menubar").removeClass("active");
-	$(".menubar").eq(0).addClass("active"); // eq(0) = 1st menu item
+	if(current_user === "")
+	{
+		$(".screen").hide();
+		$("#welcome_menu").show();
+	}
+	else
+	{
+		$(".screen").hide();
+		$("#after_login").show();
+	}
+
 }
 
+/////////////////////// register section ///////////////////////////
 function Register()
 {
 	$(".screen").hide();
 	$("#register_menu").show();
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(1).addClass("active"); // eq(1) = 1st menu item
 }
 
-function Login()
-{
-	$(".screen").hide();
-	$("#login_menu").show();
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(2).addClass("active"); // eq(2) = 1st menu item
-}
-
-function afterLogin()
-{
-	//clear the inputs after submit
-	$('#login_form').each(function()
-	{
-		this.reset();
-	});
-	$(".screen").hide();
-	$("#after_login").show();
-}
-
-
-function Setting()
-{
-	$(".screen").hide();
-	$("#setting").show();
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
-}
-
-function About()
-{
-	$(".screen").hide();
-	$("#about").show();
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
-}
-
-function Game_page()
-{
-	$(".screen").hide();
-	$("#game_page").show();
-	context = canvas.getContext("2d");
-	Start()
-	// $(".menu").removeClass("active");
-	// $(".menu").eq(3).addClass("active"); // eq(3) = 1st menu item
-}
-
+// register user to game
 function NewUser()
 {
+	var username = document.querySelector("#reg_username").value;
+	if (users.some(user => user.username === username))
+	{
+		alert("username exist in the system");
+	}
+	else
+	{
+		addUser();
+		$(".screen").hide();
+		$("#welcome_menu").show();
+	}
+
 	//clear the inputs after submit
 	$('#register_form').each(function()
 	{
 		this.reset();
 	});
-	addUser();
-	alert(users)
+}
+
+
+// register user to game
+function addUser()
+{
+    var user = document.querySelector("#reg_username").value;
+    var pass = document.querySelector("#reg_password").value;
+    var first_name = document.querySelector("#first_name").value;
+    var last_name = document.querySelector("#last_name").value;
+    var email = document.querySelector("#email").value;
+    var birthdate = document.querySelector("#date").value;
+    fullName = first_name.concat(" ", last_name);
+    var user = {
+        username: user, 
+        password: pass, 
+        full_name: fullName, 
+        email: email, 
+        birthdate: birthdate,
+    };
+    users.push(user);
+    alert("User added to game");
+}
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+/////////////////////// login section ///////////////////////////
+function Login()
+{
+	$(".screen").hide();
+	$("#login_menu").show();
+}
+
+function CheckLogin()
+{
+	//clear the inputs after submit
+	var username = document.querySelector("#username").value;
+	var password = document.querySelector("#password").value;
+	var user = users.find(u => u.username === username);
+	if (user != undefined)
+	{
+		if(user.password === password)
+		{
+			current_user = user.username;
+			alert("success to login");
+			$(".screen").hide();
+			$("#after_login").show();
+			document.getElementById("userToPut").innerHTML = "User: " + current_user;
+		}
+	}
+	else
+	{
+		alert("username or passowrd not correct");
+	}
+	$('#login_form').each(function()
+	{
+		this.reset();
+	});
+}
+
+
+////////////////////////////////////////////////////////////////////
+
+
+/////////////////////// logout section ///////////////////////////
+
+function Logout()
+{
+	current_user = "";
 	$(".screen").hide();
 	$("#welcome_menu").show();
 }
+
+
+////////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////// setting section ///////////////////////////
+function Setting()
+{
+	document.getElementById("up_button").innerHTML = key_play[0].up;
+	document.getElementById("down_button").innerHTML = key_play[0].down;
+	document.getElementById("right_button").innerHTML = key_play[0].right;
+	document.getElementById("left_button").innerHTML = key_play[0].left;
+	$(".screen").hide();
+	$("#setting_menu").show();
+}
+
+function UpButton()
+{
+	key_play[0].up = "w";
+	document.getElementById("up_button").innerHTML = key_play[0].up;
+}
+
+function DownButton()
+{
+	key_play[0].down = "s";
+	document.getElementById("down_button").innerHTML = key_play[0].down;
+}
+
+function RightButton()
+{
+	key_play[0].right = "d";
+	document.getElementById("right_button").innerHTML = key_play[0].right;
+}
+
+function LeftButton()
+{
+	key_play[0].left = "a"
+	document.getElementById("left_button").innerHTML = key_play[0].left;
+}
+
+///////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////// about section ///////////////////////////
+function About()
+{
+		$("#about_menu").dialog({
+			model: true,
+			// autoOpen: false,
+			title: "test",
+			"ui-dialog": "highlight",
+			hight: 600,
+			width: 800,
+			draggable: false,
+			resizable: false,
+			closeOnEscape: true,
+			show: 
+			{
+			effect: "blind",
+			duration: 500
+			},
+			hide: 
+			{
+			effect: "explode",
+			duration: 700
+			},
+			clickOutside: true,
+			// clickOutsideTrigger: ""
+		});
+
+}
+
+
+
+
+////////////////////////////////////////////////////////////////
+
+
+/////////////////////// game section ///////////////////////////
+function Game_page()
+{
+	$(".screen").hide();
+	$("#game_page").show();
+	context = canvas.getContext("2d");
+	Start();
+}
+
+///////////////////////////////////////////////////////////////

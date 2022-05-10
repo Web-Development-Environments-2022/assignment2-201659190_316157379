@@ -347,7 +347,6 @@ function About()
 			model: true,
 			// autoOpen: false,
 			title: "test",
-			"ui-dialog": "highlight",
 			hight: 600,
 			width: 800,
 			draggable: false,
@@ -363,15 +362,11 @@ function About()
 			effect: "explode",
 			duration: 700
 			},
-			clickOutside: true,
+			clickOutside: false,
 			// clickOutsideTrigger: ""
 		});
 
 }
-
-
-
-
 ////////////////////////////////////////////////////////////////
 
 

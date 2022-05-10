@@ -321,38 +321,69 @@ function Setting()
 
 function UpButton()
 {
-	document.getElementById("up_button").innerHTML = key_play.up;
+	document.getElementById("up_button").innerHTML = "";
+	// bind the button to function that "listen" to keyboard and when user click on key it
+	// take it and unbind the button so no keys will be added
+	$("#up_button").bind({
+		keyup: function(e){
+			document.getElementById("up_button").innerHTML = e.key;
+			$("#up_button").unbind("keyup");
+		}
+	});
 }
 
 function DownButton()
 {
-	document.getElementById("down_button").innerHTML = key_play.down;
+	document.getElementById("down_button").innerHTML = "";
+	$("#down_button").bind({
+		keyup: function(e){
+			document.getElementById("down_button").innerHTML = e.key;
+			$("#down_button").unbind("keyup");
+		}
+	});
 }
 
 function RightButton()
 {
-	document.getElementById("right_button").innerHTML = key_play.right;
+	document.getElementById("right_button").innerHTML = "";
+	$("#right_button").bind({
+		keyup: function(e){
+			document.getElementById("right_button").innerHTML = e.key;
+			$("#right_button").unbind("keyup");
+		}
+	});
 }
 
 function LeftButton()
 {
-	document.getElementById("left_button").innerHTML = key_play.left;
-}
-
-function Gameballs()
-{
-	document.getElementById("left_button").innerHTML = game_balls;
+	document.getElementById("left_button").innerHTML = "";
+	$("#left_button").bind({
+		keyup: function(e){
+			document.getElementById("left_button").innerHTML = e.key;
+			$("#left_button").unbind("keyup");
+		}
+	});
 }
 
 function SaveSetting()
 {
-	var username = document.querySelector("#username").value;
+	key_play.up = document.getElementById("up_button").innerHTML;
+	key_play.down = document.getElementById("down_button").innerHTML;
+	key_play.right = document.getElementById("right_button").innerHTML;
+	key_play.left = document.getElementById("left_button").innerHTML;
+	game_balls_color.color1 = document.querySelector("#ball1_color").value;
+	game_balls_color.color2 = document.querySelector("#ball2_color").value;
+	game_balls_color.color3 = document.querySelector("#ball3_color").value;
+	game_balls = document.querySelector("#game_balls_input").value;
+	game_time = document.querySelector("#game_time").value;
+	monster_number = document.querySelector("#monster_number").value;
+	Welcome();
 }
 
 function ResetSetting()
 {
-	key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2192" };
-	game_balls_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"}
+	key_play = {up: "ArrowUp", down: "ArrowDown", right: "ArrowRight", left: "ArrowLeft"};
+	game_balls_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"};
 	game_balls = 50;
 	game_time = 60;
 	monster_number = 1;
@@ -367,25 +398,18 @@ function ResetSetting()
 	document.getElementById("ball2_color").value = game_balls_color.color2;
 	document.getElementById("ball3_color").value = game_balls_color.color3;
 }
-function ResetSetting()
-{
-	key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2192" };
-	// game_balls_color.color1 = ;
-	// game_balls_color.color2 = ;
-	// game_balls_color.color3 = ;
-	game_balls = 50;
-	game_time = 60;
-	monster_number = 1;
-	document.getElementById("up_button").innerHTML = key_play.up;
-	document.getElementById("down_button").innerHTML = key_play.down;
-	document.getElementById("right_button").innerHTML = key_play.right;
-	document.getElementById("left_button").innerHTML = key_play.left;
-	document.getElementById("game_balls_input").value = game_balls;
-	document.getElementById("game_time").value = game_time;
-	document.getElementById("monster_number").value = monster_number;
-	document.getElementById("ball1_color").value = game_balls_color.color1;
-	document.getElementById("ball2_color").value = game_balls_color.color2;
-	document.getElementById("ball3_color").value = game_balls_color.color3;
+function RandomSetting()
+{ 
+	document.getElementById("up_button").innerHTML = "ArrowUp";
+	document.getElementById("down_button").innerHTML = "ArrowDown";
+	document.getElementById("right_button").innerHTML = "ArrowRight";
+	document.getElementById("left_button").innerHTML = "ArrowLeft";
+	document.getElementById("game_balls_input").value = Math.floor(Math.random()*(90-50+1) + 50);
+	document.getElementById("game_time").value = 60 + Math.floor(Math.random()*500);
+	document.getElementById("monster_number").value = Math.floor(Math.random()*(4-1+1)+1);
+	document.getElementById("ball1_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
+	document.getElementById("ball2_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
+	document.getElementById("ball3_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
 }
 
 ///////////////////////////////////////////////////////////////////

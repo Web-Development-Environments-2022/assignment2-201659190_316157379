@@ -7,7 +7,8 @@ var users = [
         birthdate: "1/1/1970"
     }
 ];
-key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2192" };
+key_play = {up: "ArrowUp", down: "ArrowDown", right: "ArrowRight", left: "ArrowLeft"};
+// key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2190" };
 game_balls = 50;
 game_time = 60;
 monster_number = 1;

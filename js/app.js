@@ -15,6 +15,7 @@ $(document).ready(function()
 {
 	checkRegisteration();
 	validateLoginInput();
+	CheckSetting();
 	Welcome();
 });
 
@@ -304,36 +305,87 @@ function Logout()
 /////////////////////// setting section ///////////////////////////
 function Setting()
 {
-	document.getElementById("up_button").innerHTML = key_play[0].up;
-	document.getElementById("down_button").innerHTML = key_play[0].down;
-	document.getElementById("right_button").innerHTML = key_play[0].right;
-	document.getElementById("left_button").innerHTML = key_play[0].left;
+	document.getElementById("up_button").innerHTML = key_play.up;
+	document.getElementById("down_button").innerHTML = key_play.down;
+	document.getElementById("right_button").innerHTML = key_play.right;
+	document.getElementById("left_button").innerHTML = key_play.left;
+	document.getElementById("game_balls_input").value = game_balls;
+	document.getElementById("game_time").value = game_time;
+	document.getElementById("monster_number").value = monster_number;
+	document.getElementById("ball1_color").value = game_balls_color.color1;
+	document.getElementById("ball2_color").value = game_balls_color.color2;
+	document.getElementById("ball3_color").value = game_balls_color.color3;
 	$(".screen").hide();
 	$("#setting_menu").show();
 }
 
 function UpButton()
 {
-	key_play[0].up = "w";
-	document.getElementById("up_button").innerHTML = key_play[0].up;
+	document.getElementById("up_button").innerHTML = key_play.up;
 }
 
 function DownButton()
 {
-	key_play[0].down = "s";
-	document.getElementById("down_button").innerHTML = key_play[0].down;
+	document.getElementById("down_button").innerHTML = key_play.down;
 }
 
 function RightButton()
 {
-	key_play[0].right = "d";
-	document.getElementById("right_button").innerHTML = key_play[0].right;
+	document.getElementById("right_button").innerHTML = key_play.right;
 }
 
 function LeftButton()
 {
-	key_play[0].left = "a"
-	document.getElementById("left_button").innerHTML = key_play[0].left;
+	document.getElementById("left_button").innerHTML = key_play.left;
+}
+
+function Gameballs()
+{
+	document.getElementById("left_button").innerHTML = game_balls;
+}
+
+function SaveSetting()
+{
+	var username = document.querySelector("#username").value;
+}
+
+function ResetSetting()
+{
+	key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2192" };
+	game_balls_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"}
+	game_balls = 50;
+	game_time = 60;
+	monster_number = 1;
+	document.getElementById("up_button").innerHTML = key_play.up;
+	document.getElementById("down_button").innerHTML = key_play.down;
+	document.getElementById("right_button").innerHTML = key_play.right;
+	document.getElementById("left_button").innerHTML = key_play.left;
+	document.getElementById("game_balls_input").value = game_balls;
+	document.getElementById("game_time").value = game_time;
+	document.getElementById("monster_number").value = monster_number;
+	document.getElementById("ball1_color").value = game_balls_color.color1;
+	document.getElementById("ball2_color").value = game_balls_color.color2;
+	document.getElementById("ball3_color").value = game_balls_color.color3;
+}
+function ResetSetting()
+{
+	key_play = {up:"&#x2191", down:"&#x2193", right:"&#x2192", left:"&#x2192" };
+	// game_balls_color.color1 = ;
+	// game_balls_color.color2 = ;
+	// game_balls_color.color3 = ;
+	game_balls = 50;
+	game_time = 60;
+	monster_number = 1;
+	document.getElementById("up_button").innerHTML = key_play.up;
+	document.getElementById("down_button").innerHTML = key_play.down;
+	document.getElementById("right_button").innerHTML = key_play.right;
+	document.getElementById("left_button").innerHTML = key_play.left;
+	document.getElementById("game_balls_input").value = game_balls;
+	document.getElementById("game_time").value = game_time;
+	document.getElementById("monster_number").value = monster_number;
+	document.getElementById("ball1_color").value = game_balls_color.color1;
+	document.getElementById("ball2_color").value = game_balls_color.color2;
+	document.getElementById("ball3_color").value = game_balls_color.color3;
 }
 
 ///////////////////////////////////////////////////////////////////

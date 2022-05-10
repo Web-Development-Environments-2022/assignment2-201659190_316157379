@@ -134,10 +134,33 @@
 					RIGHT:
 					<button id="right_button" type="button" onclick="RightButton()"></button>
 					<br>
-					LEFT
+					LEFT:
 					<button id="left_button"type="button" onclick="LeftButton()"></button>
 					<br>
-					<button type="button" onclick="Welcome()">return to menu</button>
+
+					<label for="game_balls_input">Game balls:</label>
+					<input type="text" id="game_balls_input" name="game_balls_input" placeholder="Choose between 50-90">
+					<br>
+					<label for="ball1_color">Ball 1: </label>
+					<input type="color" id="ball1_color" name="ball1_color">
+					<br>
+					<label for="ball2_color">Ball 2: </label>
+					<input type="color" id="ball2_color" name="ball2_color">
+					<br>
+					<label for="ball3_color">Ball 3: </label>
+					<input type="color" id="ball3_color" name="ball3_color" value="">
+					<br>
+					<label for="game_time">Game time: </label>
+					<input type="text" id="game_time" name="game_time" placeholder="number greater\equal to 60">
+					<br>
+					<label for="monster_number">Monster's number: </label>
+					<input type="text" id="monster_number" name="monster_number"placeholder="Choose between 1-4">
+					<br>
+					<button type="button" onclick="RandomSetting()">Random Setting</button>
+					<button type="button" onclick="ResetSetting()">Reset Setting</button>
+					<br>
+					<button type="button" onclick="SaveSetting()">Save Setting</button>
+					<button type="button" onclick="Welcome()">Return to menu</button>
 				</form>
 			</div>
 			<!-- need to update text and also the popup window need to exit when click outside the popup window -->

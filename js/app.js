@@ -12,7 +12,7 @@ var food2Point = 15;
 var food3Point = 25;
 
 var inGame = false;
-
+var emptyCells = [];
 
 
 $(document).ready(function() 
@@ -38,7 +38,7 @@ function Start() {
 
 	
 	
-	
+
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -74,7 +74,7 @@ function Start() {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
-					// board[i][j] = 2;
+					board[i][j] = 0;
 
 				} else {
 					// 0 indicate empty location
@@ -101,6 +101,18 @@ function Start() {
 		food3--;
 	}
 
+	// for (var i = 0; i < 10; i++) 
+	// {
+	// 	for (var j = 0; j < 10; j++) 
+	// 	{
+	// 		if(board[i][j] === 0)
+	// 		{
+	// 			emptyCells.push([i,j]);
+	// 			alert([i, j])
+	// 		}
+			
+	// 	}
+	// }
 	
 
 
@@ -132,6 +144,11 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
+// function findRandomEmptyCell(board) {
+// 	var i = Math.floor(Math.random() * emptyCells.length + 1);
+// 	return emptyCells[i];
+// }
+
 // need to change the keysdown to the current keys direction
 function GetKeyPressed() {
 	if (keysDown[38]) {
@@ -157,6 +174,7 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
+			// shape and color of pacman
 			if (board[i][j] == 2) {
 				context.beginPath();
 				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
@@ -167,6 +185,7 @@ function Draw() {
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
+				// shapes and color of the foods
 			} else if (board[i][j] == 1.1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
@@ -182,7 +201,7 @@ function Draw() {
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "green"; //color
 				context.fill();
-
+			// shape and color of the wells
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);

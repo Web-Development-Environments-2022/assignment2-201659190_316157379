@@ -21,11 +21,15 @@ $(document).ready(function()
 
 function Start() {
 
+	
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
 	var cnt = 100;
-	var food_remain = 50;
+	var food_remain = 50; ///////////////////////////////////////
+	var food_remain1 = 10;
+	
+	
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -39,18 +43,27 @@ function Start() {
 				(i == 6 && j == 1) ||
 				(i == 6 && j == 2)
 			) {
+				// 4 indicate obstacles
 				board[i][j] = 4;
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
-					board[i][j] = 1;
+					// 1 indicate food
+					board[i][j] = 1.1;
+
+				} else if (randomNum <= (1.0 * food_remain1) / cnt) {
+					food_remain1--;
+					// 1 indicate food
+					board[i][j] = 1.2;
+
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
 					board[i][j] = 2;
 				} else {
+					// 0 indicate empty location
 					board[i][j] = 0;
 				}
 				cnt--;
@@ -59,9 +72,16 @@ function Start() {
 	}
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
-		board[emptyCell[0]][emptyCell[1]] = 1;
+		board[emptyCell[0]][emptyCell[1]] = 1.1;
 		food_remain--;
 	}
+	while (food_remain1 > 0) {
+		var emptyCell = findRandomEmptyCell(board);
+		board[emptyCell[0]][emptyCell[1]] = 1.2;
+		food_remain1--;
+	}
+
+
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -90,6 +110,7 @@ function findRandomEmptyCell(board) {
 	return [i, j];
 }
 
+// need to change the keysdown to the current keys direction
 function GetKeyPressed() {
 	if (keysDown[38]) {
 		return 1;
@@ -124,11 +145,17 @@ function Draw() {
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
-			} else if (board[i][j] == 1) {
+			} else if (board[i][j] == 1.1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
+			} else if (board[i][j] == 1.2) {
+				context.beginPath();
+				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
+				context.fillStyle = "red"; //color
+				context.fill();
+
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
@@ -162,6 +189,7 @@ function UpdatePosition() {
 			shape.i++;
 		}
 	}
+	// scoer configuration
 	if (board[shape.i][shape.j] == 1) {
 		score++;
 	}
@@ -179,6 +207,8 @@ function UpdatePosition() {
 	}
 }
 
+
+/////////////////////// welcome section ///////////////////////////
 function Welcome()
 {
 	if(current_user === "")
@@ -193,6 +223,8 @@ function Welcome()
 	}
 
 }
+/////////////////////////////////////////////////////////////
+
 
 /////////////////////// register section ///////////////////////////
 function Register()
@@ -244,8 +276,6 @@ function addUser()
     users.push(user);
     alert("User added to game");
 }
-
-
 
 /////////////////////////////////////////////////////////////
 
@@ -309,12 +339,12 @@ function Setting()
 	document.getElementById("down_button").innerHTML = key_play.down;
 	document.getElementById("right_button").innerHTML = key_play.right;
 	document.getElementById("left_button").innerHTML = key_play.left;
-	document.getElementById("game_balls_input").value = game_balls;
+	document.getElementById("game_food").value = game_food;
 	document.getElementById("game_time").value = game_time;
 	document.getElementById("monster_number").value = monster_number;
-	document.getElementById("ball1_color").value = game_balls_color.color1;
-	document.getElementById("ball2_color").value = game_balls_color.color2;
-	document.getElementById("ball3_color").value = game_balls_color.color3;
+	document.getElementById("ball1_color").value = game_food_color.color1;
+	document.getElementById("ball2_color").value = game_food_color.color2;
+	document.getElementById("ball3_color").value = game_food_color.color3;
 	$(".screen").hide();
 	$("#setting_menu").show();
 }
@@ -371,10 +401,10 @@ function SaveSetting()
 	key_play.down = document.getElementById("down_button").innerHTML;
 	key_play.right = document.getElementById("right_button").innerHTML;
 	key_play.left = document.getElementById("left_button").innerHTML;
-	game_balls_color.color1 = document.querySelector("#ball1_color").value;
-	game_balls_color.color2 = document.querySelector("#ball2_color").value;
-	game_balls_color.color3 = document.querySelector("#ball3_color").value;
-	game_balls = document.querySelector("#game_balls_input").value;
+	game_food_color.color1 = document.querySelector("#ball1_color").value;
+	game_food_color.color2 = document.querySelector("#ball2_color").value;
+	game_food_color.color3 = document.querySelector("#ball3_color").value;
+	game_food = document.querySelector("#game_food").value;
 	game_time = document.querySelector("#game_time").value;
 	monster_number = document.querySelector("#monster_number").value;
 	Welcome();
@@ -383,20 +413,20 @@ function SaveSetting()
 function ResetSetting()
 {
 	key_play = {up: "ArrowUp", down: "ArrowDown", right: "ArrowRight", left: "ArrowLeft"};
-	game_balls_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"};
-	game_balls = 50;
+	game_food_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"};
+	game_food = 50;
 	game_time = 60;
 	monster_number = 1;
 	document.getElementById("up_button").innerHTML = key_play.up;
 	document.getElementById("down_button").innerHTML = key_play.down;
 	document.getElementById("right_button").innerHTML = key_play.right;
 	document.getElementById("left_button").innerHTML = key_play.left;
-	document.getElementById("game_balls_input").value = game_balls;
+	document.getElementById("game_food").value = game_food;
 	document.getElementById("game_time").value = game_time;
 	document.getElementById("monster_number").value = monster_number;
-	document.getElementById("ball1_color").value = game_balls_color.color1;
-	document.getElementById("ball2_color").value = game_balls_color.color2;
-	document.getElementById("ball3_color").value = game_balls_color.color3;
+	document.getElementById("ball1_color").value = game_food_color.color1;
+	document.getElementById("ball2_color").value = game_food_color.color2;
+	document.getElementById("ball3_color").value = game_food_color.color3;
 }
 function RandomSetting()
 { 
@@ -404,7 +434,7 @@ function RandomSetting()
 	document.getElementById("down_button").innerHTML = "ArrowDown";
 	document.getElementById("right_button").innerHTML = "ArrowRight";
 	document.getElementById("left_button").innerHTML = "ArrowLeft";
-	document.getElementById("game_balls_input").value = Math.floor(Math.random()*(90-50+1) + 50);
+	document.getElementById("game_food").value = Math.floor(Math.random()*(90-50+1) + 50);
 	document.getElementById("game_time").value = 60 + Math.floor(Math.random()*500);
 	document.getElementById("monster_number").value = Math.floor(Math.random()*(4-1+1)+1);
 	document.getElementById("ball1_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);

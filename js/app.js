@@ -214,10 +214,10 @@ function Draw() {
 			}
 
 			// sand timer
-			else if (board[i][j] == 5) 
-			{
-				context.drawImage("sand_time.png", i, j)
-			}
+			// else if (board[i][j] == 5) 
+			// {
+			// 	context.drawImage("sand_time.png", i, j)
+			// }
 		}
 	}
 }

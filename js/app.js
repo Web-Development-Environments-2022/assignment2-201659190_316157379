@@ -263,7 +263,7 @@ function UpdatePosition() {
 	
 	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
 		window.clearInterval(interval);
-		window.alert("Winner");
+		window.alert("Winner");	
 		music.pause();
 		Welcome();
 	}
@@ -300,10 +300,17 @@ function UpdatePosition() {
 /////////////////////// welcome section ///////////////////////////
 function Welcome()
 {
+	
+	// window.localStorage.clear();
 	if(current_user === "")
 	{
+
 		$(".screen").hide();
 		$("#welcome_menu").show();
+		if(getUser(users[0].username) === null)
+		{
+			setUserToStorage(users[0]);
+		}
 	}
 	else
 	{
@@ -315,6 +322,42 @@ function Welcome()
 }
 /////////////////////////////////////////////////////////////
 
+/////////////////////// local storage ///////////////////////////
+
+// get users from local storage
+function getUser(username)
+{
+	var user = null;
+	var keys = Object.keys(localStorage);
+	for(var i = 0; i < keys.length; i++)
+	{
+		if(username === keys[i])
+		{
+			
+			user = localStorage.getItem(keys[i]);
+			user = (JSON.parse(user));
+			break;
+		}
+	}
+	return user;
+}
+
+function setUserToStorage(user)
+{
+	localStorage.setItem(user.username, JSON.stringify(user));
+}
+
+// function getAllUsers()
+// {
+// 	var user = null;
+// 	var keys = Object.keys(localStorage);
+// 	for(var i = 0; i < keys.length; i++)
+// 	{
+// 		alert(key[i] + ": " + localStorage.getItem(key[i]));
+// 	}
+// }
+
+/////////////////////////////////////////////////////////////
 
 /////////////////////// register section ///////////////////////////
 function Register()
@@ -328,7 +371,7 @@ function Register()
 function NewUser()
 {
 	var username = document.querySelector("#reg_username").value;
-	if (users.some(user => user.username === username))
+	if (getUser(username) !== null)
 	{
 		alert("username exist in the system");
 	}
@@ -364,7 +407,8 @@ function addUser()
         email: email, 
         birthdate: birthdate,
     };
-    users.push(user);
+    // users.push(user);
+	setUserToStorage(user);
     alert("User added to game");
 }
 
@@ -384,17 +428,20 @@ function CheckLogin()
 	//clear the inputs after submit
 	var username = document.querySelector("#username").value;
 	var password = document.querySelector("#password").value;
-	var user = users.find(u => u.username === username);
-	if (user != undefined)
+	user = getUser(username);
+	if(user !== null)
 	{
 		if(user.password === password)
 		{
 			current_user = user.username;
-			// alert("success to login");
 			$(".screen").hide();
 			$("#after_login").show();
 			document.getElementById("userToPut").innerHTML = "User: " + current_user;
-			document.getElementById("userToPut2").innerHTML = "User: " + current_user; 
+			document.getElementById("userToPut2").innerHTML = "User: " + current_user;
+		}
+		else
+		{
+			alert("username or passowrd not correct");
 		}
 	}
 	else
@@ -627,3 +674,4 @@ function Game_page()
 }
 
 ///////////////////////////////////////////////////////////////
+

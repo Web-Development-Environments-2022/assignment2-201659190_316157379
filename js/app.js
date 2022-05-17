@@ -1,5 +1,6 @@
 var context;
 var shape = new Object();
+var monsterShape = new Object();
 var board;
 var score;
 var pac_color;
@@ -14,6 +15,8 @@ var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
 var bonusTime = 10;
+var cnt = 121;
+pac_color = "yellow";
 
 
 $(document).ready(function() 
@@ -22,7 +25,10 @@ $(document).ready(function()
 	validateLoginInput();
 	CheckSetting();
 	Welcome();
+	// Game_page();
 });
+
+
 
 function Start() {
 
@@ -40,12 +46,12 @@ function Start() {
 	time_elapsed = game_time;
 	board = new Array();
 	score = 0;
-	pac_color = "yellow";
-	var cnt = 121;
 	var food1 = Math.round(0.6*game_food);
 	var food2 = Math.round(0.3*game_food);
 	var food3 = Math.round(0.1*game_food);
 	var pacman_remain = 1;
+	var monsters = monster_number;
+	food = game_food;
 	for (var i = 0; i < 11; i++) {
 		
 		board[i] = new Array();
@@ -56,23 +62,34 @@ function Start() {
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
 				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
+				(i == 6 && j == 2) ||
+				(i == 8 && j == 8) ||
+				(i == 7 && j == 8) ||
+				(i == 6 && j == 8)
 			) {
 				// 4 indicate obstacles
 				board[i][j] = 4;
-			} else {
+			}
+			else if((i == 0 && j == 0))
+			{
+				// 5 indicate its a ghost
+				board[i][j] = 5
+				monsterShape.i = i;
+				monsterShape.j = j;
+			} 
+			else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food1) / cnt) {
 					food1--;
-					// 1 indicate food
+					// 1.1 indicate food1
 					board[i][j] = 1.1;
 				} else if (randomNum <= (1.0 * food2) / cnt) {
 					food2--;
-					// 1 indicate food
+					// 1.2 indicate food2
 					board[i][j] = 1.2;
 				} else if (randomNum <= (1.0 * food3) / cnt) {
 					food3--;
-					// 1 indicate food
+					// 1.3 indicate food3
 					board[i][j] = 1.3;
 				
 				} else if (randomNum < (1.0 * (pacman_remain + (food1+food2+food3))) / cnt) {
@@ -80,6 +97,7 @@ function Start() {
 					shape.j = j;
 					pacman_remain--;
 					board[i][j] = 0;
+					
 
 				} else {
 					// 0 indicate empty location
@@ -105,8 +123,6 @@ function Start() {
 		board[emptyCell[0]][emptyCell[1]] = 1.3;
 		food3--;
 	}
-	var emptyCellForTime = findRandomEmptyCell(board);
-	board[emptyCellForTime[0]][emptyCellForTime[1]] = 5;
 
 
 
@@ -114,7 +130,6 @@ function Start() {
 	addEventListener(
 		"keydown",
 		function(e) {
-			// keysDown[e.keyCode] = true;
 			keysDown[e.key] = true;
 
 		},
@@ -123,12 +138,12 @@ function Start() {
 	addEventListener(
 		"keyup",
 		function(e) {
-			// keysDown[e.keyCode] = false;
 			keysDown[e.key] = false;
 		},
 		false
 	);
 	interval = setInterval(UpdatePosition, 100);// 250
+	intervalMonster = setInterval(GhostMove, 500);
 }
 
 function findRandomEmptyCell(board) {
@@ -142,7 +157,6 @@ function findRandomEmptyCell(board) {
 }
 
 
-// need to change the keysdown to the current keys direction
 function GetKeyPressed() {
 		//up
 		if (keysDown[key_play.up]) {
@@ -165,7 +179,7 @@ function GetKeyPressed() {
 
 function Draw() {
 	music.play();
-	context.clearRect(0, 0, canvas.width, canvas.height) //clean board
+	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	// canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
@@ -178,15 +192,15 @@ function Draw() {
 			// shape and color of pacman
 			if (board[i][j] == 2) {
 				context.beginPath();
-				// context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				// pacman body
 				context.arc(center.x, center.y, faceDirect[0], faceDirect[1], faceDirect[2]); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
+				// pacman eyes
 				context.arc(center.x + faceDirect[3], center.y - faceDirect[4],
 							faceDirect[5], faceDirect[6], faceDirect[7]);
-				// context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
 				// shapes and color of the foods
@@ -212,18 +226,18 @@ function Draw() {
 				context.fillStyle = "black"; //color
 				context.fill();
 			}
-
-			// sand timer
-			// else if (board[i][j] == 5) 
-			// {
-			// 	context.drawImage("sand_time.png", i, j)
-			// }
+			else if(board[i][j] == 5)
+			{
+				drawGhost(context, center);
+				// context.drawImage("/Images/ghost_icon.png", 5,5);
+			}
 		}
 	}
 }
 
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
+	
 	var x = GetKeyPressed();
 	if (x == 1) { //up
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
@@ -249,9 +263,6 @@ function UpdatePosition() {
 			faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 		}
 	}
-	
-	// board[shape.i][shape.j] = 2;
-	// time_elapsed = time_elapsed - 0.1;
 
 	/// remind the user he have 10 seconds to finsih the game
 	if ( time_elapsed <= game_time * 0.1) {
@@ -263,11 +274,12 @@ function UpdatePosition() {
 	
 	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
 		window.clearInterval(interval);
+		window.clearInterval(intervalMonster);
 		window.alert("Winner");	
-		music.pause();
+		// music.pause();
 		Welcome();
 	}
-	else if(time_elapsed <= 0)
+	else if(time_elapsed <= 0 || striks === 0)
 	{
 		if(score < 100)
 		{
@@ -278,8 +290,31 @@ function UpdatePosition() {
 			window.alert("Loser");
 		}
 		window.clearInterval(interval);
+		window.clearInterval(intervalMonster);
 		music.pause();
 		Welcome();
+	}
+	// pacman get eaten by ghost
+	else if(shape.i === monsterShape.i && shape.j === monsterShape.j)
+	{
+		window.clearInterval(interval);
+		window.clearInterval(intervalMonster);
+		alert("you get eaten");
+		striks--;
+		score = score - 10;
+		lblstrikes.value = striks;
+		var rand = findRandomEmptyCell(board);
+		shape.i = rand[0];
+		shape.j = rand[1];
+		board[monsterShape.i][monsterShape.j] = 0;
+		monsterShape.i = 0;
+		monsterShape.j = 0;
+		board[monsterShape.i][monsterShape.j] = 0;
+		interval = setInterval(UpdatePosition, 100);// 250
+		intervalMonster = setInterval(GhostMove, 500);
+		time_elapsed = time_elapsed - 0.1;
+		Draw();
+		
 	}
 	else {
 	// score configuration
@@ -300,7 +335,7 @@ function UpdatePosition() {
 /////////////////////// welcome section ///////////////////////////
 function Welcome()
 {
-	
+
 	// window.localStorage.clear();
 	if(current_user === "")
 	{
@@ -315,6 +350,8 @@ function Welcome()
 	else
 	{
 		window.clearInterval(interval);
+		music.pause();
+		music.currentTime = 0;
 		$(".screen").hide();
 		$("#after_login").show();
 	}
@@ -346,18 +383,8 @@ function setUserToStorage(user)
 {
 	localStorage.setItem(user.username, JSON.stringify(user));
 }
-
-// function getAllUsers()
-// {
-// 	var user = null;
-// 	var keys = Object.keys(localStorage);
-// 	for(var i = 0; i < keys.length; i++)
-// 	{
-// 		alert(key[i] + ": " + localStorage.getItem(key[i]));
-// 	}
-// }
-
 /////////////////////////////////////////////////////////////
+
 
 /////////////////////// register section ///////////////////////////
 function Register()
@@ -494,14 +521,6 @@ function UpButton()
 	document.getElementById("up_button").innerHTML = "";
 	// bind the button to function that "listen" to keyboard and when user click on key it
 	// take it and unbind the button so no keys will be added
-	// $("#up_button").bind({
-	// 	keyup: function(e){
-	// 		document.getElementById("up_button").innerHTML = e.key;
-	// 		alert(e.keyCode);
-	// 		$("#up_button").unbind("keyup");
-	// 	}
-	// });
-
 	$("#up_button").bind({
 		keyup: function(e){
 		document.getElementById("up_button").innerHTML = e.key;

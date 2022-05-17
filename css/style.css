@@ -258,3 +258,8 @@ footer
     font-size: 4vh;
     margin-bottom: 0;
 }
+
+#game_image
+{
+    display: none;
+}

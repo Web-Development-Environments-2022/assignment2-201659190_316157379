@@ -5,7 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/menubar.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
-		<script src="/js/app.js"></script>
+
 
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
 		<!-- qwer -->
@@ -21,6 +21,7 @@
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/gameDB.js"></script>
 		<script type="text/javascript" src="/js/validation.js"></script>
+		<script type="text/javascript" src="/js/ghost.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 		<!-- app logo imoji -->
@@ -182,6 +183,11 @@
 				<div  class="middle_box" id="game"> 
 					<h2 id="userToPut2"></h2>
 					<canvas id="canvas" height="670" width="670"></canvas>
+					<div id="game_image">					
+						<img src="Images/blue_ghost.png">
+						<img src="Images/yellow_ghost.png">
+						<img src="Images/pink_ghost.png">
+					</div>
 					<br>
 					<button type="button" onclick="Welcome()">Exit</button>
 					<button type="button" onclick="Game_page()">New game</button>

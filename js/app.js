@@ -17,16 +17,22 @@ var music = new Audio("./audio/pacman2.wav");
 var bonusTime = 10;
 var cnt = 121;
 pac_color = "yellow";
-// ghostImage1 = "/Images/blue_ghost.png"
-ghost1 = 
+var hourGlass = new Image();
+hourGlass.src = "./Images/hourglass.png";
+hourGlass.onerror = function(){
+	alert("img error");
+}
+
+
+
 
 $(document).ready(function() 
 {
 	checkRegisteration();
 	validateLoginInput();
 	CheckSetting();
-	Welcome();
-	// Game_page();
+	// Welcome();
+	Game_page();
 });
 
 
@@ -126,6 +132,10 @@ function Start() {
 		food3--;
 	}
 
+	// add hourglass to canvas to add time to pacman if he eat it
+	var emptyCell = findRandomEmptyCell(board);
+	board[emptyCell[0]][emptyCell[1]] = 3;
+
 
 
 	keysDown = {};
@@ -192,7 +202,8 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			// shape and color of pacman
-			if (board[i][j] == 2) {
+			if (board[i][j] == 2) 
+			{
 				context.beginPath();
 				// pacman body
 				context.arc(center.x, center.y, faceDirect[0], faceDirect[1], faceDirect[2]); // half circle
@@ -206,23 +217,33 @@ function Draw() {
 				context.fillStyle = "black"; //color
 				context.fill();
 				// shapes and color of the foods
-			} else if (board[i][j] == 1.1) {
+			} else if (board[i][j] == 1.1) 
+			{
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = game_food_color.color1; //color
 				context.fill();
-			} else if (board[i][j] == 1.2) {
+			} else if (board[i][j] == 1.2) 
+			{
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = game_food_color.color2; //color
 				context.fill();
-			} else if (board[i][j] == 1.3) {
+			} else if (board[i][j] == 1.3) 
+			{
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = game_food_color.color3; //color
 				context.fill();
+			} 
+			// hourglass that grent time bonus
+			else if (board[i][j] == 3) 
+			{
+					context.drawImage(hourGlass, center.x - 10, center.y - 15, 25, 35);
+			}
 			// shape and color of the wells
-			} else if (board[i][j] == 4) {
+			 else if (board[i][j] == 4) 
+			 {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
 				context.fillStyle = "black"; //color
@@ -283,6 +304,10 @@ function UpdatePosition() {
 	}
 	else if(time_elapsed <= 0 || striks === 0)
 	{
+		if (time_elapsed <= 0)
+		{
+			time_count.value = 0;
+		}
 		if(score < 100)
 		{
 			alert("You are better than " + score + " points")
@@ -322,11 +347,12 @@ function UpdatePosition() {
 		board[monsterShape.i][monsterShape.j] = 0;
 		interval = setInterval(UpdatePosition, 500);// 250
 		intervalMonster = setInterval(GhostMove, 500);
+
 		time_elapsed = time_elapsed - 0.1;
 		Draw();
-		
 	}
-	else {
+	else 
+	{
 	// score configuration
 		if (board[shape.i][shape.j] == 1.1) {
 			score = score + food1Point;
@@ -334,6 +360,11 @@ function UpdatePosition() {
 			score = score + food2Point;
 		} else if(board[shape.i][shape.j] == 1.3) {
 			score = score + food3Point;
+		}
+		//pacman get bonus time when he ate the hourglass
+		if(board[shape.i][shape.j] == 3)
+		{
+			time_elapsed = time_elapsed + bonusTime;
 		}
 		board[shape.i][shape.j] = 2;
 		time_elapsed = time_elapsed - 0.1;

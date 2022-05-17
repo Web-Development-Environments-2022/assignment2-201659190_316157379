@@ -19,7 +19,8 @@ body
 {
     width: 100vh;
     height: 70vh;
-    background-color: aqua;
+    /* background-color: aqua; */
+    background-color: white;
 }
 
 footer
@@ -259,7 +260,3 @@ footer
     margin-bottom: 0;
 }
 
-#game_image
-{
-    display: none;
-}

@@ -1,4 +1,27 @@
 lastCell = 0;
+var ghost1 = new Image();
+ghost1.src = "./Images/regular_ghost.png";
+ghost1.onerror = function(){
+	alert("img1 error");
+}
+
+var ghost2 = new Image();
+ghost2.src = "./Images/yellow_ghost.png";
+ghost2.onerror = function(){
+	alert("img2 error");
+}
+
+var ghost3 = new Image();
+ghost3.src = "./Images/blue_ghost.png";
+ghost3.onerror = function(){
+	alert("img3 error");
+}
+
+var ghost4 = new Image();
+ghost4.src = "./Images/pink_ghost.jpg";
+ghost4.onerror = function(){
+	alert("img4 error");
+}
 
 function GhostMove()
 {
@@ -71,29 +94,34 @@ function GhostMove()
 
 function drawGhost(ctx, center) 
 {
-    // ctx.drawImage(image=ghostImage1, dx=center.x, dy=center.y, dWidth=2, dHeight=2);
-	ctx.beginPath();
-	ctx.strokeStyle="black";
-	ctx.lineWidth="1";
-	ctx.fillStyle="rgba(255, 255, 255, 0.4)";
-	ctx.beginPath(); //upper part
-	ctx.moveTo(center.x, center.y);
-	ctx.quadraticCurveTo(center.x + 15, center.y - 70, 2*center.x + 30, 2*center.y);
-	ctx.moveTo(center.x, center.y);
-	ctx.lineTo(center.x + 30, center.y);
-	ctx.strokeStyle = 'black';
-	ctx.stroke();
-	ctx.fill();
-	ctx.closePath();
-	ctx.fillStyle = "#000000"; // eye circles
-	ctx.beginPath();
-	ctx.arc(center.x + 10, center.y - 20, 2, 0, Math.PI * 8, true);
-	ctx.strokeStyle = 'black';
-	ctx.stroke();
-	ctx.fill();
-	ctx.beginPath();
-	ctx.arc(center.x + 18, center.y - 20, 2, 0, Math.PI * 8, true);
-	ctx.strokeStyle = 'black';
-	ctx.stroke();
-	ctx.fill();
+    center.x - 10, 
+    center.y - 15, 
+    25,
+    35
+
+    ctx.drawImage(ghost1, center.x - 18, center.y - 20, 35, 50);
+	// ctx.beginPath();
+	// ctx.strokeStyle="black";
+	// ctx.lineWidth="1";
+	// ctx.fillStyle="rgba(255, 255, 255, 0.4)";
+	// ctx.beginPath(); //upper part
+	// ctx.moveTo(center.x, center.y);
+	// ctx.quadraticCurveTo(center.x + 15, center.y - 70, 2*center.x + 30, 2*center.y);
+	// ctx.moveTo(center.x, center.y);
+	// ctx.lineTo(center.x + 30, center.y);
+	// ctx.strokeStyle = 'black';
+	// ctx.stroke();
+	// ctx.fill();
+	// ctx.closePath();
+	// ctx.fillStyle = "#000000"; // eye circles
+	// ctx.beginPath();
+	// ctx.arc(center.x + 10, center.y - 20, 2, 0, Math.PI * 8, true);
+	// ctx.strokeStyle = 'black';
+	// ctx.stroke();
+	// ctx.fill();
+	// ctx.beginPath();
+	// ctx.arc(center.x + 18, center.y - 20, 2, 0, Math.PI * 8, true);
+	// ctx.strokeStyle = 'black';
+	// ctx.stroke();
+	// ctx.fill();
 }

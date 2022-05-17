@@ -17,7 +17,8 @@ var music = new Audio("./audio/pacman2.wav");
 var bonusTime = 10;
 var cnt = 121;
 pac_color = "yellow";
-
+// ghostImage1 = "/Images/blue_ghost.png"
+ghost1 = 
 
 $(document).ready(function() 
 {
@@ -65,9 +66,10 @@ function Start() {
 				(i == 6 && j == 2) ||
 				(i == 8 && j == 8) ||
 				(i == 7 && j == 8) ||
+				(i == 6 && j == 8) ||
 				(i == 6 && j == 8)
 			) {
-				// 4 indicate obstacles
+				// 4 indicate wall
 				board[i][j] = 4;
 			}
 			else if((i == 0 && j == 0))
@@ -178,7 +180,7 @@ function GetKeyPressed() {
 }
 
 function Draw() {
-	music.play();
+	// music.play();
 	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	// canvas.width = canvas.width; //clean board
 	lblScore.value = score;

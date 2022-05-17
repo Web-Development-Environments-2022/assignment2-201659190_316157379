@@ -71,6 +71,7 @@ function GhostMove()
 
 function drawGhost(ctx, center) 
 {
+    // ctx.drawImage(image=ghostImage1, dx=center.x, dy=center.y, dWidth=2, dHeight=2);
 	ctx.beginPath();
 	ctx.strokeStyle="black";
 	ctx.lineWidth="1";

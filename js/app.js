@@ -144,7 +144,7 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 100);// 250
+	interval = setInterval(UpdatePosition, 500);// 250
 	intervalMonster = setInterval(GhostMove, 500);
 }
 
@@ -303,16 +303,24 @@ function UpdatePosition() {
 		window.clearInterval(intervalMonster);
 		alert("you get eaten");
 		striks--;
-		score = score - 10;
+		if(score < 10)
+		{
+			score = 0
+		}
+		else
+		{
+			score = score - 10;
+		}
+		if (lastCell == 2)
+		{
+			lastCell = 0;
+		}
 		lblstrikes.value = striks;
-		var rand = findRandomEmptyCell(board);
-		shape.i = rand[0];
-		shape.j = rand[1];
-		board[monsterShape.i][monsterShape.j] = 0;
+		board[monsterShape.i][monsterShape.j] = lastCell;
 		monsterShape.i = 0;
 		monsterShape.j = 0;
 		board[monsterShape.i][monsterShape.j] = 0;
-		interval = setInterval(UpdatePosition, 100);// 250
+		interval = setInterval(UpdatePosition, 500);// 250
 		intervalMonster = setInterval(GhostMove, 500);
 		time_elapsed = time_elapsed - 0.1;
 		Draw();

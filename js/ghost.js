@@ -1,4 +1,24 @@
-lastCell = 0;
+lastCell = [0, 0, 0, 0];
+
+var monstersLocation = [
+	{
+		i: 0,
+		j: 0
+	},
+	{
+		i: 0,
+		j: 10
+	},
+	{
+		i: 10,
+		j: 0
+	},
+	{
+		i: 10,
+		j: 10
+	},
+];
+
 var ghost1 = new Image();
 ghost1.src = "./Images/regular_ghost.png";
 ghost1.onerror = function(){
@@ -23,83 +43,151 @@ ghost4.onerror = function(){
 	alert("img4 error");
 }
 
+var ghosts = [ghost1, ghost2, ghost3, ghost4];
+
+
 function GhostMove()
 {
-    diffX = Math.abs(monsterShape.i - shape.i);
-    diffY = Math.abs(monsterShape.j - shape.j);
-	board[monsterShape.i][monsterShape.j] = lastCell;
-	if (shape.i < monsterShape.i)
-	{ //up
-		if (board[monsterShape.i-1][monsterShape.j] != 4) 
-		{
-			monsterShape.i--;
+    // diffX = Math.abs(activeMonsters.i - shape.i);
+    // diffY = Math.abs(activeMonsters.j - shape.j);
+	for(var k = 0; k < monsters; k++)
+	{
+		board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
+		if (shape.i < activeMonsters[k].i)
+		{ //up
+			if (board[activeMonsters[k].i-1][activeMonsters[k].j] != 4) 
+			{
+				activeMonsters[k].i--;
+			}
+			else if(board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			{
+				activeMonsters[k].j++;
+			}
+			else if(board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			{
+				activeMonsters[k].j--;
+			}
 		}
-		else if(board[monsterShape.i][monsterShape.j+1] != 4)
-		{
-			monsterShape.j++;
+		else if (shape.i > activeMonsters[k].i)
+		{ //down
+			if (board[activeMonsters[k].i+1][activeMonsters[k].j] != 4) 
+			{
+				activeMonsters[k].i++;
+			}
+			else if(board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			{
+				activeMonsters[k].j++;
+			}
+			else if(board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			{
+				activeMonsters[k].j--;
+			}
 		}
-		else if(board[monsterShape.i][monsterShape.j-1] != 4)
-		{
-			monsterShape.j--;
+		else if (shape.j > activeMonsters[k].j)
+		{ //right
+			if (board[activeMonsters[k].i][activeMonsters[k].j + 1] != 4) 
+			{
+				activeMonsters[k].j++;
+			}
+			else if(board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			{
+				activeMonsters[k].i++;
+			}
+			else if(board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			{
+				activeMonsters[k].i--;
+			}
 		}
+		else if (shape.j < activeMonsters[k].j)
+		{ //left
+			if (board[activeMonsters[k].i][activeMonsters[k].j - 1] != 4) 
+			{
+				activeMonsters[k].i--;
+			}
+			else if(board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			{
+				activeMonsters[k].i++;
+			}
+			else if(board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			{
+				activeMonsters[k].i--;
+			}
+		}
+		lastCell[k] = board[activeMonsters[k].i][activeMonsters[k].j];
+		board[activeMonsters[k].i][activeMonsters[k].j] = 5;
 	}
-	else if (shape.i > monsterShape.i)
-	{ //down
-		if (board[monsterShape.i+1][monsterShape.j] != 4) 
-		{
-			monsterShape.i++;
-		}
-		else if(board[monsterShape.i][monsterShape.j+1] != 4)
-		{
-			monsterShape.j++;
-		}
-		else if(board[monsterShape.i][monsterShape.j-1] != 4)
-		{
-			monsterShape.j--;
-		}
-	}
-	else if (shape.j > monsterShape.j)
-	{ //right
-		if (board[monsterShape.i][monsterShape.j + 1] != 4) 
-		{
-			monsterShape.j++;
-		}
-		else if(board[monsterShape.i+1][monsterShape.j] != 4)
-		{
-			monsterShape.i++;
-		}
-		else if(board[monsterShape.i-1][monsterShape.j] != 4)
-		{
-			monsterShape.i--;
-		}
-	}
-	else if (shape.j < monsterShape.j)
-	{ //left
-		if (board[monsterShape.i][monsterShape.j - 1] != 4) 
-		{
-			monsterShape.i--;
-		}
-		else if(board[monsterShape.i+1][monsterShape.j] != 4)
-		{
-			monsterShape.i++;
-		}
-		else if(board[monsterShape.i-1][monsterShape.j] != 4)
-		{
-			monsterShape.i--;
-		}
-	}
-    lastCell = board[monsterShape.i][monsterShape.j];
-	board[monsterShape.i][monsterShape.j] = 5;
+	// board[activeMonsters.i][activeMonsters.j] = lastCell;
+	// if (shape.i < activeMonsters.i)
+	// { //up
+	// 	if (board[activeMonsters.i-1][activeMonsters.j] != 4) 
+	// 	{
+	// 		activeMonsters.i--;
+	// 	}
+	// 	else if(board[activeMonsters.i][activeMonsters.j+1] != 4)
+	// 	{
+	// 		activeMonsters.j++;
+	// 	}
+	// 	else if(board[activeMonsters.i][activeMonsters.j-1] != 4)
+	// 	{
+	// 		activeMonsters.j--;
+	// 	}
+	// }
+	// else if (shape.i > activeMonsters.i)
+	// { //down
+	// 	if (board[activeMonsters.i+1][activeMonsters.j] != 4) 
+	// 	{
+	// 		activeMonsters.i++;
+	// 	}
+	// 	else if(board[activeMonsters.i][activeMonsters.j+1] != 4)
+	// 	{
+	// 		activeMonsters.j++;
+	// 	}
+	// 	else if(board[activeMonsters.i][activeMonsters.j-1] != 4)
+	// 	{
+	// 		activeMonsters.j--;
+	// 	}
+	// }
+	// else if (shape.j > activeMonsters.j)
+	// { //right
+	// 	if (board[activeMonsters.i][activeMonsters.j + 1] != 4) 
+	// 	{
+	// 		activeMonsters.j++;
+	// 	}
+	// 	else if(board[activeMonsters.i+1][activeMonsters.j] != 4)
+	// 	{
+	// 		activeMonsters.i++;
+	// 	}
+	// 	else if(board[activeMonsters.i-1][activeMonsters.j] != 4)
+	// 	{
+	// 		activeMonsters.i--;
+	// 	}
+	// }
+	// else if (shape.j < activeMonsters.j)
+	// { //left
+	// 	if (board[activeMonsters.i][activeMonsters.j - 1] != 4) 
+	// 	{
+	// 		activeMonsters.i--;
+	// 	}
+	// 	else if(board[activeMonsters.i+1][activeMonsters.j] != 4)
+	// 	{
+	// 		activeMonsters.i++;
+	// 	}
+	// 	else if(board[activeMonsters.i-1][activeMonsters.j] != 4)
+	// 	{
+	// 		activeMonsters.i--;
+	// 	}
+	// }
+    // lastCell = board[activeMonsters.i][activeMonsters.j];
+	// board[activeMonsters.i][activeMonsters.j] = 5;
 }
 
 function drawGhost(ctx, center) 
 {
-    center.x - 10, 
-    center.y - 15, 
-    25,
-    35
+	for(var k = 0; k < monsters; k++)
+	{
+		ctx.drawImage(ghosts[k], center.x - 18, center.y - 20, 35, 50);
 
-    ctx.drawImage(ghost1, center.x - 18, center.y - 20, 35, 50);
+	}
 	// ctx.beginPath();
 	// ctx.strokeStyle="black";
 	// ctx.lineWidth="1";
@@ -124,4 +212,16 @@ function drawGhost(ctx, center)
 	// ctx.strokeStyle = 'black';
 	// ctx.stroke();
 	// ctx.fill();
+}
+
+function GetEaten()
+{
+	for(var k = 0; k < monsters; k++)
+	{
+		if(activeMonsters[k].i == shape.i && activeMonsters[k].j == shape.j)
+		{
+			return true;
+		}
+	}
+	return false;
 }

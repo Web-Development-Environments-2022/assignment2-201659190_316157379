@@ -1,6 +1,7 @@
 var context;
 var shape = new Object();
-var monsterShape = new Object();
+var monsterShape = new Object(); // delete after finish the monster array
+
 var board;
 var score;
 var pac_color;
@@ -22,6 +23,10 @@ hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
 	alert("img error");
 }
+var activeMonsters;
+var monsters
+
+
 
 
 
@@ -38,7 +43,7 @@ $(document).ready(function()
 
 
 function Start() {
-
+	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
 	right_arrow.value = key_play.right;
@@ -57,15 +62,35 @@ function Start() {
 	var food2 = Math.round(0.3*game_food);
 	var food3 = Math.round(0.1*game_food);
 	var pacman_remain = 1;
-	var monsters = monster_number;
+	monsters = parseInt(monster_number);
 	food = game_food;
+
+	// add ghosts to defualt location
+	for (var k=0; k < monsters; k++)
+	{
+		activeMonsters.push(monstersLocation[k]);
+		// board[activeMonsters[k].i, activeMonsters[k].j] = 5;
+		// alert(activeMonsters[k].j);
+	}
+
+
 	for (var i = 0; i < 11; i++) {
-		
+
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < 11; j++) {
-			if (
-				(i == 3 && j == 3) ||
+		for (var j = 0; j < 11; j++) 
+		{
+			// skip on all monsters location
+			// if (i === activeMonsters[k].i && j === activeMonsters[k])
+			// {
+			// 	continue;
+			// }
+			var obj = activeMonsters.find(obj => obj.i === i && obj.j === j);
+			if(obj !== undefined)
+			{
+				board[i][j] = 5;
+			}
+			else if ((i == 3 && j == 3) ||
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
 				(i == 6 && j == 1) ||
@@ -78,29 +103,30 @@ function Start() {
 				// 4 indicate wall
 				board[i][j] = 4;
 			}
-			else if((i == 0 && j == 0))
+			else 
 			{
-				// 5 indicate its a ghost
-				board[i][j] = 5
-				monsterShape.i = i;
-				monsterShape.j = j;
-			} 
-			else {
 				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food1) / cnt) {
+				if (randomNum <= (1.0 * food1) / cnt) 
+				{
 					food1--;
 					// 1.1 indicate food1
 					board[i][j] = 1.1;
-				} else if (randomNum <= (1.0 * food2) / cnt) {
+				} 
+				else if (randomNum <= (1.0 * food2) / cnt) 
+				{
 					food2--;
 					// 1.2 indicate food2
 					board[i][j] = 1.2;
-				} else if (randomNum <= (1.0 * food3) / cnt) {
+				} 
+				else if (randomNum <= (1.0 * food3) / cnt) 
+				{
 					food3--;
 					// 1.3 indicate food3
 					board[i][j] = 1.3;
 				
-				} else if (randomNum < (1.0 * (pacman_remain + (food1+food2+food3))) / cnt) {
+				} 
+				else if (randomNum < (1.0 * (pacman_remain + (food1+food2+food3))) / cnt) 
+				{
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
@@ -111,8 +137,8 @@ function Start() {
 					// 0 indicate empty location
 					board[i][j] = 0;
 				}
-				cnt--;
 			}
+			cnt--;
 		}
 	}
 	board[shape.i][shape.j] = 2;
@@ -154,8 +180,8 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 500);// 250
-	intervalMonster = setInterval(GhostMove, 500);
+	interval = setInterval(UpdatePosition, 100);// 250
+	intervalMonster = setInterval(GhostMove, 300);
 }
 
 function findRandomEmptyCell(board) {
@@ -252,13 +278,13 @@ function Draw() {
 			else if(board[i][j] == 5)
 			{
 				drawGhost(context, center);
-				// context.drawImage("/Images/ghost_icon.png", 5,5);
 			}
 		}
 	}
 }
 
-function UpdatePosition() {
+function UpdatePosition() 
+{
 	board[shape.i][shape.j] = 0;
 	
 	var x = GetKeyPressed();
@@ -321,6 +347,14 @@ function UpdatePosition() {
 		music.pause();
 		Welcome();
 	}
+
+
+	// for(var k = 0; k < monsters;)
+	// {
+
+	// }
+
+
 	// pacman get eaten by ghost
 	else if(shape.i === monsterShape.i && shape.j === monsterShape.j)
 	{
@@ -328,7 +362,7 @@ function UpdatePosition() {
 		window.clearInterval(intervalMonster);
 		alert("you get eaten");
 		striks--;
-		if(score < 10)
+		if(score <= 10)
 		{
 			score = 0
 		}
@@ -345,8 +379,8 @@ function UpdatePosition() {
 		monsterShape.i = 0;
 		monsterShape.j = 0;
 		board[monsterShape.i][monsterShape.j] = 0;
-		interval = setInterval(UpdatePosition, 500);// 250
-		intervalMonster = setInterval(GhostMove, 500);
+		interval = setInterval(UpdatePosition, 100);// 250
+		intervalMonster = setInterval(GhostMove, 300);
 
 		time_elapsed = time_elapsed - 0.1;
 		Draw();
@@ -373,365 +407,5 @@ function UpdatePosition() {
 }
 
 
-/////////////////////// welcome section ///////////////////////////
-function Welcome()
-{
 
-	// window.localStorage.clear();
-	if(current_user === "")
-	{
-
-		$(".screen").hide();
-		$("#welcome_menu").show();
-		if(getUser(users[0].username) === null)
-		{
-			setUserToStorage(users[0]);
-		}
-	}
-	else
-	{
-		window.clearInterval(interval);
-		music.pause();
-		music.currentTime = 0;
-		$(".screen").hide();
-		$("#after_login").show();
-	}
-
-}
-/////////////////////////////////////////////////////////////
-
-/////////////////////// local storage ///////////////////////////
-
-// get users from local storage
-function getUser(username)
-{
-	var user = null;
-	var keys = Object.keys(localStorage);
-	for(var i = 0; i < keys.length; i++)
-	{
-		if(username === keys[i])
-		{
-			
-			user = localStorage.getItem(keys[i]);
-			user = (JSON.parse(user));
-			break;
-		}
-	}
-	return user;
-}
-
-function setUserToStorage(user)
-{
-	localStorage.setItem(user.username, JSON.stringify(user));
-}
-/////////////////////////////////////////////////////////////
-
-
-/////////////////////// register section ///////////////////////////
-function Register()
-{
-	window.clearInterval(interval);
-	$(".screen").hide();
-	$("#register_menu").show();
-}
-
-// register user to game
-function NewUser()
-{
-	var username = document.querySelector("#reg_username").value;
-	if (getUser(username) !== null)
-	{
-		alert("username exist in the system");
-	}
-	else
-	{
-		addUser();
-		$(".screen").hide();
-		$("#welcome_menu").show();
-	}
-
-	//clear the inputs after submit
-	$('#register_form').each(function()
-	{
-		this.reset();
-	});
-}
-
-
-// register user to game
-function addUser()
-{
-    var user = document.querySelector("#reg_username").value;
-    var pass = document.querySelector("#reg_password").value;
-    var first_name = document.querySelector("#first_name").value;
-    var last_name = document.querySelector("#last_name").value;
-    var email = document.querySelector("#email").value;
-    var birthdate = document.querySelector("#date").value;
-    fullName = first_name.concat(" ", last_name);
-    var user = {
-        username: user, 
-        password: pass, 
-        full_name: fullName, 
-        email: email, 
-        birthdate: birthdate,
-    };
-    // users.push(user);
-	setUserToStorage(user);
-    alert("User added to game");
-}
-
-/////////////////////////////////////////////////////////////
-
-
-/////////////////////// login section ///////////////////////////
-function Login()
-{
-	window.clearInterval(interval);
-	$(".screen").hide();
-	$("#login_menu").show();
-}
-
-function CheckLogin()
-{
-	//clear the inputs after submit
-	var username = document.querySelector("#username").value;
-	var password = document.querySelector("#password").value;
-	user = getUser(username);
-	if(user !== null)
-	{
-		if(user.password === password)
-		{
-			current_user = user.username;
-			$(".screen").hide();
-			$("#after_login").show();
-			document.getElementById("userToPut").innerHTML = "User: " + current_user;
-			document.getElementById("userToPut2").innerHTML = "User: " + current_user;
-		}
-		else
-		{
-			alert("username or passowrd not correct");
-		}
-	}
-	else
-	{
-		alert("username or passowrd not correct");
-	}
-	$('#login_form').each(function()
-	{
-		this.reset();
-	});
-}
-
-
-////////////////////////////////////////////////////////////////////
-
-
-/////////////////////// logout section ///////////////////////////
-
-function Logout()
-{
-	current_user = "";
-	$(".screen").hide();
-	$("#welcome_menu").show();
-}
-
-
-////////////////////////////////////////////////////////////////////
-
-
-
-/////////////////////// setting section ///////////////////////////
-function Setting()
-{
-	document.getElementById("up_button").innerHTML = key_play.up;
-	document.getElementById("down_button").innerHTML = key_play.down;
-	document.getElementById("right_button").innerHTML = key_play.right;
-	document.getElementById("left_button").innerHTML = key_play.left;
-	document.getElementById("game_food").value = game_food;
-	document.getElementById("game_time").value = game_time;
-	document.getElementById("monster_number").value = monster_number;
-	document.getElementById("ball1_color").value = game_food_color.color1;
-	document.getElementById("ball2_color").value = game_food_color.color2;
-	document.getElementById("ball3_color").value = game_food_color.color3;
-	$(".screen").hide();
-	$("#setting_menu").show();
-}
-
-function UpButton()
-{
-	document.getElementById("up_button").innerHTML = "";
-	// bind the button to function that "listen" to keyboard and when user click on key it
-	// take it and unbind the button so no keys will be added
-	$("#up_button").bind({
-		keyup: function(e){
-		document.getElementById("up_button").innerHTML = e.key;
-		$("#up_button").unbind("keyup");
-	}
-	});
-
-}
-
-function DownButton()
-{
-	document.getElementById("down_button").innerHTML = "";
-	$("#down_button").bind({
-		keyup: function(e){
-			document.getElementById("down_button").innerHTML = e.key;
-			$("#down_button").unbind("keyup");
-		}
-	});
-}
-
-function RightButton()
-{
-	document.getElementById("right_button").innerHTML = "";
-	$("#right_button").bind({
-		keyup: function(e){
-			document.getElementById("right_button").innerHTML = e.key;
-			$("#right_button").unbind("keyup");
-		}
-	});
-}
-
-function LeftButton()
-{
-	document.getElementById("left_button").innerHTML = "";
-	$("#left_button").bind({
-		keyup: function(e){
-			document.getElementById("left_button").innerHTML = e.key;
-			$("#left_button").unbind("keyup");
-		}
-	});
-}
-
-function SaveSetting()
-{
-	key_play.up = document.getElementById("up_button").innerHTML;
-	key_play.down = document.getElementById("down_button").innerHTML;
-	key_play.right = document.getElementById("right_button").innerHTML;
-	key_play.left = document.getElementById("left_button").innerHTML;
-	game_food_color.color1 = document.querySelector("#ball1_color").value;
-	game_food_color.color2 = document.querySelector("#ball2_color").value;
-	game_food_color.color3 = document.querySelector("#ball3_color").value;
-	game_food = document.querySelector("#game_food").value;
-	game_time = document.querySelector("#game_time").value;
-	monster_number = document.querySelector("#monster_number").value;
-	Welcome();
-}
-
-function ResetSetting()
-{
-	key_play = {up: "ArrowUp", down: "ArrowDown", right: "ArrowRight", left: "ArrowLeft"};
-	game_food_color = {color1: "#0000FF", color2: "#FF0000", color3: "#00FF00"};
-	game_food = 50;
-	game_time = 60;
-	monster_number = 1;
-	document.getElementById("up_button").innerHTML = key_play.up;
-	document.getElementById("down_button").innerHTML = key_play.down;
-	document.getElementById("right_button").innerHTML = key_play.right;
-	document.getElementById("left_button").innerHTML = key_play.left;
-	document.getElementById("game_food").value = game_food;
-	document.getElementById("game_time").value = game_time;
-	document.getElementById("monster_number").value = monster_number;
-	document.getElementById("ball1_color").value = game_food_color.color1;
-	document.getElementById("ball2_color").value = game_food_color.color2;
-	document.getElementById("ball3_color").value = game_food_color.color3;
-}
-function RandomSetting()
-{ 
-	document.getElementById("up_button").innerHTML = "ArrowUp";
-	document.getElementById("down_button").innerHTML = "ArrowDown";
-	document.getElementById("right_button").innerHTML = "ArrowRight";
-	document.getElementById("left_button").innerHTML = "ArrowLeft";
-	document.getElementById("game_food").value = Math.floor(Math.random()*(90-50+1) + 50);
-	document.getElementById("game_time").value = 60 + Math.floor(Math.random()*500);
-	document.getElementById("monster_number").value = Math.floor(Math.random()*(4-1+1)+1);
-	document.getElementById("ball1_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
-	document.getElementById("ball2_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
-	document.getElementById("ball3_color").value = "#" + Math.floor(Math.random()*16777215).toString(16);
-}
-
-///////////////////////////////////////////////////////////////////
-
-
-
-/////////////////////// about section ///////////////////////////
-function About() {
-	window.clearInterval(interval);
-	$("#about_menu").dialog({
-		model: true,
-		//autoOpen: false,
-		title: "test",
-		hight: 600,
-		width: 800,
-		draggable: false,
-		resizable: false,
-		closeOnEscape: true,
-		show: 
-		{
-		effect: "blind",
-		duration: 500
-		},
-		
-		hide: 
-		{
-		effect: "explode",
-		duration: 700
-		},
-		clickOutside: true,
-		clickOutsideTrigger: ".dialog"
-		
-	});
-	$( ".dialog" ).click(function() {
-		$( "#about_menu" ).dialog( "open" );
-	});
-
-
-}
-$.widget( "ui.dialog", $.ui.dialog, {
-	options: {
-	  clickOutside: true, // Determine if clicking outside the dialog shall close it
-	  clickOutsideTrigger: "#about_menu" // Element (id or class) that triggers the dialog opening 
-	},
-  
-	open: function() {
-	  var clickOutsideTriggerEl = $( this.options.clickOutsideTrigger );
-	  var that = this;
-	  
-	  if (this.options.clickOutside){
-		// Add document wide click handler for the current dialog namespace
-		$(document).on( "click.ui.dialogClickOutside" + that.eventNamespace, function(event){
-		  if ( $(event.target).closest($(clickOutsideTriggerEl)).length == 0 && $(event.target).closest($(that.uiDialog)).length == 0){
-			that.close();
-		  }
-		});
-	  }
-	  
-	  this._super(); // Invoke parent open method
-	},
-	
-	close: function() {
-	  var that = this;
-	  
-	  // Remove document wide click handler for the current dialog
-	  $(document).off( "click.ui.dialogClickOutside" + that.eventNamespace );
-	  
-	  this._super(); // Invoke parent close method 
-	},  
-  
-  });
-////////////////////////////////////////////////////////////////
-
-
-/////////////////////// game section ///////////////////////////
-function Game_page()
-{
-	window.clearInterval(interval);
-	$(".screen").hide();
-	$("#game_page").show();
-	context = canvas.getContext("2d");
-	Start();
-}
-
-///////////////////////////////////////////////////////////////
 

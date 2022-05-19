@@ -1,11 +1,11 @@
+var current_user = "";
+
 /////////////////////// welcome section ///////////////////////////
 function Welcome()
 {
-
 	// window.localStorage.clear();
-	if(current_user === "")
+	if(current_user == "")
 	{
-
 		$(".screen").hide();
 		$("#welcome_menu").show();
 		if(getUser(users[0].username) === null)
@@ -15,9 +15,6 @@ function Welcome()
 	}
 	else
 	{
-		window.clearInterval(interval);
-		music.pause();
-		music.currentTime = 0;
 		$(".screen").hide();
 		$("#after_login").show();
 	}
@@ -351,7 +348,8 @@ $.widget( "ui.dialog", $.ui.dialog, {
 /////////////////////// game section ///////////////////////////
 function Game_page()
 {
-	window.clearInterval(interval);
+	// window.clearInterval(interval);
+	// window.clearInterval(intervalMonster);
 	$(".screen").hide();
 	$("#game_page").show();
 	context = canvas.getContext("2d");

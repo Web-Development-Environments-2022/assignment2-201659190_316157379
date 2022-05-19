@@ -38,7 +38,7 @@ ghost3.onerror = function(){
 }
 
 var ghost4 = new Image();
-ghost4.src = "./Images/pink_ghost.jpg";
+ghost4.src = "./Images/pink_ghost.png";
 ghost4.onerror = function(){
 	alert("img4 error");
 }
@@ -186,37 +186,12 @@ function drawGhost(ctx, center)
 	for(var k = 0; k < monsters; k++)
 	{
 		ctx.drawImage(ghosts[k], center.x - 18, center.y - 20, 35, 50);
-
 	}
-	// ctx.beginPath();
-	// ctx.strokeStyle="black";
-	// ctx.lineWidth="1";
-	// ctx.fillStyle="rgba(255, 255, 255, 0.4)";
-	// ctx.beginPath(); //upper part
-	// ctx.moveTo(center.x, center.y);
-	// ctx.quadraticCurveTo(center.x + 15, center.y - 70, 2*center.x + 30, 2*center.y);
-	// ctx.moveTo(center.x, center.y);
-	// ctx.lineTo(center.x + 30, center.y);
-	// ctx.strokeStyle = 'black';
-	// ctx.stroke();
-	// ctx.fill();
-	// ctx.closePath();
-	// ctx.fillStyle = "#000000"; // eye circles
-	// ctx.beginPath();
-	// ctx.arc(center.x + 10, center.y - 20, 2, 0, Math.PI * 8, true);
-	// ctx.strokeStyle = 'black';
-	// ctx.stroke();
-	// ctx.fill();
-	// ctx.beginPath();
-	// ctx.arc(center.x + 18, center.y - 20, 2, 0, Math.PI * 8, true);
-	// ctx.strokeStyle = 'black';
-	// ctx.stroke();
-	// ctx.fill();
 }
 
 function GetEaten()
 {
-	for(var k = 0; k < monsters; k++)
+	for(var k = 0; k < activeMonsters.length; k++)
 	{
 		if(activeMonsters[k].i == shape.i && activeMonsters[k].j == shape.j)
 		{
@@ -224,4 +199,19 @@ function GetEaten()
 		}
 	}
 	return false;
+}
+
+function resetGhostsLocation()
+{
+	for(var k = 0; k < monsters; k++)
+	{
+		if(lastCell[k] != 2 || lastCell[k] != 5)
+		{
+			board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
+		}
+		activeMonsters[k].i = monstersLocation[k].i;
+		activeMonsters[k].j = monstersLocation[k].j;
+		board[activeMonsters[k].i][activeMonsters[k].j] = 5;
+		lastCell[k] = 0;
+	}
 }

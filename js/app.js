@@ -8,13 +8,14 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-var current_user = "";
+
 var food1Point = 5;
 var food2Point = 15;
 var food3Point = 25;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
+music.loop = true;
 var bonusTime = 10;
 var cnt = 121;
 pac_color = "yellow";
@@ -24,7 +25,8 @@ hourGlass.onerror = function(){
 	alert("img error");
 }
 var activeMonsters;
-var monsters
+var monsters;
+var ghost = new Object();
 
 
 
@@ -36,13 +38,15 @@ $(document).ready(function()
 	checkRegisteration();
 	validateLoginInput();
 	CheckSetting();
-	// Welcome();
-	Game_page();
+	Welcome();
+	// Game_page();
 });
 
 
 
-function Start() {
+function Start() 
+{
+	music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -65,12 +69,14 @@ function Start() {
 	monsters = parseInt(monster_number);
 	food = game_food;
 
-	// add ghosts to defualt location
+	// configure the number of ghosts in the game
 	for (var k=0; k < monsters; k++)
 	{
-		activeMonsters.push(monstersLocation[k]);
-		// board[activeMonsters[k].i, activeMonsters[k].j] = 5;
-		// alert(activeMonsters[k].j);
+		ghost = {
+			i: monstersLocation[k].i,
+			j: monstersLocation[k].j
+		};
+		activeMonsters.push(ghost);
 	}
 
 
@@ -80,13 +86,9 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 11; j++) 
 		{
-			// skip on all monsters location
-			// if (i === activeMonsters[k].i && j === activeMonsters[k])
-			// {
-			// 	continue;
-			// }
-			var obj = activeMonsters.find(obj => obj.i === i && obj.j === j);
-			if(obj !== undefined)
+			// 5 indicates ghost
+			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
+			if(ghost !== undefined)
 			{
 				board[i][j] = 5;
 			}
@@ -180,8 +182,8 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 100);// 250
-	intervalMonster = setInterval(GhostMove, 300);
+	interval = setInterval(UpdatePosition, 250);// 250
+	intervalMonster = setInterval(GhostMove, 350);
 }
 
 function findRandomEmptyCell(board) {
@@ -216,7 +218,7 @@ function GetKeyPressed() {
 }
 
 function Draw() {
-	// music.play();
+	
 	context.clearRect(0, 0, canvas.width, canvas.height); //clean board
 	// canvas.width = canvas.width; //clean board
 	lblScore.value = score;
@@ -321,47 +323,30 @@ function UpdatePosition()
 	var food2 = Math.round(0.3*game_food);
 	var food3 = Math.round(0.1*game_food);
 	
+
+	// window.clearInterval(interval);
+	// window.clearInterval(intervalMonster);
 	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
+		// window.clearInterval(interval);
+		// window.clearInterval(intervalMonster);
 		window.alert("Winner");	
 		// music.pause();
-		Welcome();
+		GameExit();
 	}
-	else if(time_elapsed <= 0 || striks === 0)
+	else if(time_elapsed <= 0)
 	{
-		if (time_elapsed <= 0)
-		{
-			time_count.value = 0;
-		}
-		if(score < 100)
-		{
-			alert("You are better than " + score + " points")
-		}
-		else
-		{
-			window.alert("Loser");
-		}
 		window.clearInterval(interval);
 		window.clearInterval(intervalMonster);
+		loseMessage()
 		music.pause();
 		Welcome();
 	}
-
-
-	// for(var k = 0; k < monsters;)
-	// {
-
-	// }
-
-
 	// pacman get eaten by ghost
-	else if(shape.i === monsterShape.i && shape.j === monsterShape.j)
+	else if(GetEaten())
 	{
 		window.clearInterval(interval);
 		window.clearInterval(intervalMonster);
 		alert("you get eaten");
-		striks--;
 		if(score <= 10)
 		{
 			score = 0
@@ -370,20 +355,21 @@ function UpdatePosition()
 		{
 			score = score - 10;
 		}
-		if (lastCell == 2)
-		{
-			lastCell = 0;
-		}
+		striks--;
 		lblstrikes.value = striks;
-		board[monsterShape.i][monsterShape.j] = lastCell;
-		monsterShape.i = 0;
-		monsterShape.j = 0;
-		board[monsterShape.i][monsterShape.j] = 0;
-		interval = setInterval(UpdatePosition, 100);// 250
-		intervalMonster = setInterval(GhostMove, 300);
-
-		time_elapsed = time_elapsed - 0.1;
-		Draw();
+		resetGhostsLocation();
+		if(striks == 0)
+		{
+			loseMessage();
+			GameExit();
+		}
+		else
+		{
+			interval = setInterval(UpdatePosition, 250);// 250
+			intervalMonster = setInterval(GhostMove, 350);
+			time_elapsed = time_elapsed - 0.1;
+			Draw();
+		}
 	}
 	else 
 	{
@@ -406,6 +392,35 @@ function UpdatePosition()
 	}
 }
 
+function loseMessage()
+{
+	if(score < 100)
+	{
+		alert("You are better than " + score + " points");
+	}
+	else
+	{
+		window.alert("Loser");
+	}
+}
+
+function GameExit()
+{
+		window.clearInterval(interval);
+		window.clearInterval(intervalMonster);
+		music.pause();
+		music.currentTime = 0;
+		Welcome();
+}
+
+function NewGame()
+{
+	window.clearInterval(interval);
+	window.clearInterval(intervalMonster);
+	music.pause();
+	music.currentTime = 0;
+	Game_page();
+}
 
 
 

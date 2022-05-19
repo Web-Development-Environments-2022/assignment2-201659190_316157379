@@ -1,6 +1,5 @@
 function validateLoginInput()
 {
-
     $("#login_form").validate({
         rules: 
         {
@@ -84,6 +83,58 @@ function checkRegisteration()
             NewUser();
         }
     });
+}
+
+function CheckSetting()
+{
+    $("#setting_menu_form").validate({
+        rules: 
+        {
+            game_balls_input:
+            {
+                required: true,
+                min: 50,
+                max: 90
+            },
+            game_time:
+            {
+                required: true,
+                min: 60
+            },
+            monster_number:
+            {
+                required: true,
+                min: 1,
+                max: 4
+            }
+        },
+        messages: 
+        {
+            game_balls_input:
+            {
+                required: "<br>This field must be filled<br>",
+                min: "<br>Need to be greater or equal to 50<br>",
+                max: "<br>Need to be smaller or equal to 90<br>"
+            },
+            game_time:
+            {
+                required: "<br>This field must be filled<br>",
+                min: "<br>Need to be greater or equal to 60<br>"
+            },
+            monster_number:
+            {
+                required: "<br>This field must be filled<br>",
+                min: "<br>Need to be greater or equal to 1<br>",
+                max: "<br>Need to be smaller or equal to 4<br>"
+            }
+        },
+
+        submitHandler: function()
+        {
+            SaveSetting();
+        }
+    });
+
 }
 
 

@@ -180,6 +180,7 @@ footer
 #setting_menu_form
 {
     display: inline-block;
+    
 }
 
 
@@ -188,6 +189,7 @@ footer
     width: 15vh;
     height: 4vh;
     margin-bottom: 1vh;
+    margin-left: 2vh;
 }
 
 #setting_menu_form button:hover
@@ -198,4 +200,12 @@ footer
 #setting_menu_form h2
 {
     margin-top: -1.5vh;
+}
+
+#setting_menu_form input
+{
+    height: 3vh;
+    width: 15vh;
+    margin-left: 2vh;
+    margin-bottom: 1vh;
 }

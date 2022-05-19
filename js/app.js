@@ -17,7 +17,8 @@ var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
 music.loop = true;
 var bonusTime = 10;
-var cnt = 121;
+var cnt = 225;
+var cnt_squere = Math.sqrt(cnt);
 pac_color = "yellow";
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
@@ -46,7 +47,7 @@ $(document).ready(function()
 
 function Start() 
 {
-	music.play();
+	// music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -80,11 +81,11 @@ function Start()
 	}
 
 
-	for (var i = 0; i < 11; i++) {
+	for (var i = 0; i < cnt_squere; i++) {
 
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < 11; j++) 
+		for (var j = 0; j < cnt_squere; j++) 
 		{
 			// 5 indicates ghost
 			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
@@ -224,8 +225,8 @@ function Draw() {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblstrikes.value = striks;
-	for (var i = 0; i < 11; i++) {
-		for (var j = 0; j < 11; j++) {
+	for (var i = 0; i < cnt_squere; i++) {
+		for (var j = 0; j < cnt_squere; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
@@ -422,90 +423,5 @@ function NewGame()
 	Game_page();
 }
 
-<<<<<<< HEAD
-///////////////////////////////////////////////////////////////////
 
-
-
-///////////////////// about section ///////////////////////////
-function About() {
-
-	$("#about_menu").dialog({
-		model: true,
-		//autoOpen: false,
-		title: "test",
-		hight: 600,
-		width: 800,
-		draggable: false,
-		resizable: false,
-		closeOnEscape: true,
-		show: 
-		{
-		effect: "blind",
-		duration: 500
-		},
-		
-		hide: 
-		{
-		effect: "explode",
-		duration: 700
-		},
-		clickOutside: true,
-		clickOutsideTrigger: ".dialog"
-		
-	});
-	$( ".dialog" ).click(function() {
-		$( "#about_menu" ).dialog( "open" );
-	});
-
-
-
-}
-$.widget( "ui.dialog", $.ui.dialog, {
-options: {
-  clickOutside: true, // Determine if clicking outside the dialog shall close it
-  clickOutsideTrigger: "#about_menu" // Element (id or class) that triggers the dialog opening 
-},
-
-open: function() {
-  var clickOutsideTriggerEl = $( this.options.clickOutsideTrigger );
-  var that = this;
-  
-  if (this.options.clickOutside){
-	// Add document wide click handler for the current dialog namespace
-	$(document).on( "click.ui.dialogClickOutside" + that.eventNamespace, function(event){
-	  if ( $(event.target).closest($(clickOutsideTriggerEl)).length == 0 && $(event.target).closest($(that.uiDialog)).length == 0){
-		that.close();
-	  }
-	});
-  }
-  
-  this._super(); // Invoke parent open method
-},
-
-close: function() {
-  var that = this;
-  
-  // Remove document wide click handler for the current dialog
-  $(document).off( "click.ui.dialogClickOutside" + that.eventNamespace );
-  
-  this._super(); // Invoke parent close method 
-},  
-
-});
-
-////////////////////////////////////////////////////////////////
-
-
-/////////////////////// game section ///////////////////////////
-function Game_page()
-{
-	$(".screen").hide();
-	$("#game_page").show();
-	context = canvas.getContext("2d");
-	Start();
-}
-=======
-
->>>>>>> 4bee9af84df251d3e7dfae97def64ddbac070046
 

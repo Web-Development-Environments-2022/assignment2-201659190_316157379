@@ -13,10 +13,12 @@ body
     color: white;
 }
 
+
+
 #canvas
 {
-    width: 100vh;
-    height: 70vh;
+    width: 200vh;
+    height: 140vh;
     background-color: aqua;
     /* background-color: white; */
 

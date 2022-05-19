@@ -1,14 +1,12 @@
 var context;
 var shape = new Object();
 var monsterShape = new Object(); // delete after finish the monster array
-
 var board;
 var score;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-
 var food1Point = 5;
 var food2Point = 15;
 var food3Point = 25;
@@ -17,8 +15,9 @@ var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
 music.loop = true;
 var bonusTime = 10;
-var cnt = 121;
-pac_color = "yellow";
+var cnt;
+var cnt_squere;
+
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
@@ -46,7 +45,10 @@ $(document).ready(function()
 
 function Start() 
 {
-	music.play();
+	pac_color = "yellow";
+	cnt = 225;
+	cnt_squere = Math.sqrt(cnt);
+	// music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -80,11 +82,11 @@ function Start()
 	}
 
 
-	for (var i = 0; i < 11; i++) {
-
+	for (var i = 0; i < cnt_squere; i++) 
+	{
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < 11; j++) 
+		for (var j = 0; j < cnt_squere; j++) 
 		{
 			// 5 indicates ghost
 			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
@@ -187,11 +189,11 @@ function Start()
 }
 
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 10 + 1);
-	var j = Math.floor(Math.random() * 10 + 1);
+	var i = Math.floor(Math.random() * (cnt_squere-1) + 1);
+	var j = Math.floor(Math.random() * (cnt_squere-1) + 1);
 	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 10 + 1);
-		j = Math.floor(Math.random() * 10 + 1);
+		i = Math.floor(Math.random() * (cnt_squere-1) + 1);
+		j = Math.floor(Math.random() * (cnt_squere-1) + 1);
 	}
 	return [i, j];
 }
@@ -224,8 +226,8 @@ function Draw() {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblstrikes.value = striks;
-	for (var i = 0; i < 11; i++) {
-		for (var j = 0; j < 11; j++) {
+	for (var i = 0; i < cnt_squere; i++) {
+		for (var j = 0; j < cnt_squere; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
@@ -297,7 +299,7 @@ function UpdatePosition()
 		}
 	}
 	if (x == 2) { //down
-		if (shape.j < 10 && board[shape.i][shape.j + 1] != 4) {
+		if (shape.j < (cnt_squere-1) && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			faceDirect = [30, 0.65 * Math.PI, 0.35 * Math.PI, 15, 0, 5, 0, 2 * Math.PI];
 		}
@@ -309,7 +311,7 @@ function UpdatePosition()
 		}
 	}
 	if (x == 4) { //right
-		if (shape.i < 10 && board[shape.i + 1][shape.j] != 4) {
+		if (shape.i < (cnt_squere-1) && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 		}
@@ -339,6 +341,7 @@ function UpdatePosition()
 		window.clearInterval(intervalMonster);
 		loseMessage()
 		music.pause();
+		music.currentTime = 0;
 		Welcome();
 	}
 	// pacman get eaten by ghost

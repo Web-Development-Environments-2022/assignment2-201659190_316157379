@@ -7,16 +7,21 @@ var monstersLocation = [
 	},
 	{
 		i: 0,
-		j: 10
+		j: 14
 	},
 	{
-		i: 10,
+		i: 14,
 		j: 0
 	},
 	{
-		i: 10,
-		j: 10
+		i: 14,
+		j: 14
 	},
+];
+
+var ghosts = [{
+		image: ghost1
+	}
 ];
 
 var ghost1 = new Image();
@@ -45,6 +50,11 @@ ghost4.onerror = function(){
 
 var ghosts = [ghost1, ghost2, ghost3, ghost4];
 
+// var ghosts = [{
+// 	image: ghost1
+// 	i: monstersLocation
+// }
+// ];
 
 function GhostMove()
 {

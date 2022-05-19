@@ -90,7 +90,7 @@ function CheckSetting()
     $("#setting_menu_form").validate({
         rules: 
         {
-            game_balls_input:
+            game_food:
             {
                 required: true,
                 min: 50,
@@ -110,7 +110,7 @@ function CheckSetting()
         },
         messages: 
         {
-            game_balls_input:
+            game_food:
             {
                 required: "<br>This field must be filled<br>",
                 min: "<br>Need to be greater or equal to 50<br>",

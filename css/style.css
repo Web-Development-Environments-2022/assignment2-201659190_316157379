@@ -18,6 +18,8 @@ body
     width: 100vh;
     height: 70vh;
     background-color: aqua;
+    /* background-color: white; */
+
 }
 
 footer
@@ -209,3 +211,51 @@ footer
     margin-left: 2vh;
     margin-bottom: 1vh;
 }
+
+/* Game page */
+
+#game_page
+{
+    display: flex;
+    font-size: 3vh;
+}
+
+#game_page input
+{
+    height: 3vh;
+    width: 15vh;
+    margin-left: 2vh;
+    margin-bottom: 1vh;
+}
+
+#game_page button
+{
+    width: 15vh;
+    height: 4vh;
+    margin-bottom: 1vh;
+    margin-left: 2vh;
+}
+
+
+
+.left_box {
+    display: flexbox;
+    margin-right: 1vh;
+    margin-left: 20vh;
+    margin-top: 10vh;
+}
+.middle_box{
+    display: flexbox;
+    margin-right: 1vh;
+}
+.right_box{
+    display: flexbox;
+    margin-top: 10vh;
+}
+
+#userToPut2
+{
+    font-size: 4vh;
+    margin-bottom: 0;
+}
+

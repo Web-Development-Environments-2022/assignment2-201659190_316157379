@@ -10,6 +10,7 @@ var interval;
 var food1Point = 5;
 var food2Point = 15;
 var food3Point = 25;
+var foods;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
@@ -45,6 +46,7 @@ $(document).ready(function()
 
 function Start() 
 {
+	foods = game_food;
 	pac_color = "yellow";
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
@@ -74,7 +76,16 @@ function Start()
 	// configure the number of ghosts in the game
 	for (var k=0; k < monsters; k++)
 	{
-		ghost = {
+		// ghost = 
+		// {
+		// 	i: monstersLocation[k].i,
+		// 	j: monstersLocation[k].j
+		// };
+
+		ghost = 
+		{
+			// ghosts configure in ghost js file
+			image: ghosts[k],
 			i: monstersLocation[k].i,
 			j: monstersLocation[k].j
 		};
@@ -281,7 +292,9 @@ function Draw() {
 			}
 			else if(board[i][j] == 5)
 			{
-				drawGhost(context, center);
+				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
+
+				drawGhost(context, center, ghost_img);
 			}
 		}
 	}
@@ -321,18 +334,9 @@ function UpdatePosition()
 	if ( time_elapsed <= game_time * 0.1) {
 		pac_color = "green";
 	}
-	var food1 = Math.round(0.6*game_food);
-	var food2 = Math.round(0.3*game_food);
-	var food3 = Math.round(0.1*game_food);
-	
-
-	// window.clearInterval(interval);
-	// window.clearInterval(intervalMonster);
-	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
-		// window.clearInterval(interval);
-		// window.clearInterval(intervalMonster);
+	if(foods == 0)
+	{
 		window.alert("Winner");	
-		// music.pause();
 		GameExit();
 	}
 	else if(time_elapsed <= 0)
@@ -379,10 +383,13 @@ function UpdatePosition()
 	// score configuration
 		if (board[shape.i][shape.j] == 1.1) {
 			score = score + food1Point;
+			foods--;
 		} else if(board[shape.i][shape.j] == 1.2) {
 			score = score + food2Point;
+			foods--;
 		} else if(board[shape.i][shape.j] == 1.3) {
 			score = score + food3Point;
+			foods--;
 		}
 		//pacman get bonus time when he ate the hourglass
 		if(board[shape.i][shape.j] == 3)
@@ -424,6 +431,3 @@ function NewGame()
 	music.currentTime = 0;
 	Game_page();
 }
-
-
-

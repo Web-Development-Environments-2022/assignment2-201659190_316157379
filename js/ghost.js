@@ -19,11 +19,6 @@ var monstersLocation = [
 	},
 ];
 
-var ghosts = [{
-		image: ghost1
-	}
-];
-
 var ghost1 = new Image();
 ghost1.src = "./Images/regular_ghost.png";
 ghost1.onerror = function(){
@@ -50,10 +45,27 @@ ghost4.onerror = function(){
 
 var ghosts = [ghost1, ghost2, ghost3, ghost4];
 
-// var ghosts = [{
-// 	image: ghost1
-// 	i: monstersLocation
-// }
+// var ghosts = [
+// 	{
+// 		image: ghost1,
+// 		i: 0,
+// 		j: 0 
+// 	},
+// 	{
+// 		image: ghost1,
+// 		i: 0,
+// 		j: 14 
+// 	},
+// 	{
+// 		image: ghost1,
+// 		i: 14,
+// 		j: 0 
+// 	},
+// 	{
+// 		image: ghost1,
+// 		i: 14,
+// 		j: 14 
+// 	}
 // ];
 
 function GhostMove()
@@ -62,63 +74,81 @@ function GhostMove()
     // diffY = Math.abs(activeMonsters.j - shape.j);
 	for(var k = 0; k < monsters; k++)
 	{
+		diffX = Math.abs(activeMonsters[k].i - shape.i);
+		diffY = Math.abs(activeMonsters[k].j - shape.j);
 		board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
-		if (shape.i < activeMonsters[k].i)
-		{ //up
-			if (board[activeMonsters[k].i-1][activeMonsters[k].j] != 4) 
+		//pacman is up
+		if (shape.i < activeMonsters[k].i )
+		{ 
+			// ghost need to go up
+			if (activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4) 
 			{
 				activeMonsters[k].i--;
 			}
-			else if(board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			// ghost need to go right
+			else if(activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
 			{
 				activeMonsters[k].j++;
 			}
-			else if(board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			//// ghost need to go left
+			else if(activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
 			{
 				activeMonsters[k].j--;
 			}
 		}
+		//pacman is down
 		else if (shape.i > activeMonsters[k].i)
-		{ //down
-			if (board[activeMonsters[k].i+1][activeMonsters[k].j] != 4) 
+		{ 
+			// ghost need to go down
+			if (activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4) 
 			{
 				activeMonsters[k].i++;
 			}
-			else if(board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			// ghost need to go right
+			else if(activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
 			{
 				activeMonsters[k].j++;
 			}
-			else if(board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			// ghost need to go left
+			else if(activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
 			{
 				activeMonsters[k].j--;
 			}
 		}
+		//pacman is right
 		else if (shape.j > activeMonsters[k].j)
-		{ //right
-			if (board[activeMonsters[k].i][activeMonsters[k].j + 1] != 4) 
+		{ 
+			// ghost need to go right
+			if (activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j + 1] != 4) 
 			{
 				activeMonsters[k].j++;
 			}
-			else if(board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			// ghost need to go down
+			else if(activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
 			{
 				activeMonsters[k].i++;
 			}
-			else if(board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			// ghost need to go up
+			else if(activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
 			{
 				activeMonsters[k].i--;
 			}
 		}
+		//pacman is left
 		else if (shape.j < activeMonsters[k].j)
-		{ //left
-			if (board[activeMonsters[k].i][activeMonsters[k].j - 1] != 4) 
+		{ 
+			// ghost need to go left
+			if (activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j - 1] != 4) 
 			{
-				activeMonsters[k].i--;
+				activeMonsters[k].j--;
 			}
-			else if(board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			// ghost need to go down
+			else if(activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
 			{
 				activeMonsters[k].i++;
 			}
-			else if(board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			// ghost need to go up
+			else if(activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
 			{
 				activeMonsters[k].i--;
 			}
@@ -191,12 +221,9 @@ function GhostMove()
 	// board[activeMonsters.i][activeMonsters.j] = 5;
 }
 
-function drawGhost(ctx, center) 
+function drawGhost(ctx, center, ghost_img) 
 {
-	for(var k = 0; k < monsters; k++)
-	{
-		ctx.drawImage(ghosts[k], center.x - 18, center.y - 20, 35, 50);
-	}
+		ctx.drawImage(ghost_img, center.x - 18, center.y - 20, 35, 50);
 }
 
 function GetEaten()

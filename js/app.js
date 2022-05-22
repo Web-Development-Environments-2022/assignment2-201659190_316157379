@@ -237,8 +237,7 @@ function Start()
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);// 250
-	intervalMonster = setInterval(GhostMove, 350);
+	setAllInterval();
 }
 
 function findRandomEmptyCell(board) {
@@ -382,8 +381,7 @@ function UpdatePosition()
 	}
 	else if(time_elapsed <= 0)
 	{
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
+		ClearAllInterval();
 		loseMessage()
 		music.pause();
 		music.currentTime = 0;
@@ -392,8 +390,7 @@ function UpdatePosition()
 	// pacman get eaten by ghost
 	else if(GetEaten())
 	{
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
+		ClearAllInterval();
 		alert("you get eaten");
 		if(score <= 10)
 		{
@@ -413,8 +410,7 @@ function UpdatePosition()
 		}
 		else
 		{
-			interval = setInterval(UpdatePosition, 250);// 250
-			intervalMonster = setInterval(GhostMove, 350);
+			setAllInterval()
 			time_elapsed = time_elapsed - 0.1;
 			Draw();
 		}
@@ -473,7 +469,8 @@ function NewGame()
 
 function setAllInterval()
 {
-
+	interval = setInterval(UpdatePosition, 250);// 250
+	intervalMonster = setInterval(GhostMove, 350);
 }
 
 function ClearAllInterval()

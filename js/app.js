@@ -1,25 +1,24 @@
 var context;
 var shape = new Object();
 var monsterShape = new Object(); // delete after finish the monster array
-
 var board;
 var score;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
-
 var food1Point = 5;
 var food2Point = 15;
 var food3Point = 25;
+var foods;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 var music = new Audio("./audio/pacman2.wav");
 music.loop = true;
 var bonusTime = 10;
-var cnt = 225;
-var cnt_squere = Math.sqrt(cnt);
-pac_color = "yellow";
+var cnt;
+var cnt_squere;
+
 
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
@@ -54,6 +53,12 @@ $(document).ready(function()
 
 function Start() 
 {
+
+	foods = game_food;
+	pac_color = "yellow";
+	// size of the matrix
+	cnt = 400;
+	cnt_squere = Math.sqrt(cnt);
 	// music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
@@ -85,15 +90,19 @@ function Start()
 	// configure the number of ghosts in the game
 	for (var k=0; k < monsters; k++)
 	{
-		ghost = {
+		ghost = 
+		{
+			// ghosts configure in ghost js file
+			image: ghosts[k],
 			i: monstersLocation[k].i,
 			j: monstersLocation[k].j
 		};
 		activeMonsters.push(ghost);
 	}
 
-	for (var i = 0; i < cnt_squere; i++) {
 
+	for (var i = 0; i < cnt_squere; i++) 
+	{
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < cnt_squere; j++) 
@@ -212,11 +221,11 @@ function Start()
 }
 
 function findRandomEmptyCell(board) {
-	var i = Math.floor(Math.random() * 10 + 1);
-	var j = Math.floor(Math.random() * 10 + 1);
+	var i = Math.floor(Math.random() * (cnt_squere-1) + 1);
+	var j = Math.floor(Math.random() * (cnt_squere-1) + 1);
 	while (board[i][j] != 0) {
-		i = Math.floor(Math.random() * 10 + 1);
-		j = Math.floor(Math.random() * 10 + 1);
+		i = Math.floor(Math.random() * (cnt_squere-1) + 1);
+		j = Math.floor(Math.random() * (cnt_squere-1) + 1);
 	}
 	return [i, j];
 }
@@ -304,7 +313,8 @@ function Draw() {
 			}
 			else if(board[i][j] == 5)
 			{
-				drawGhost(context, center);
+				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
+				drawGhost(context, center, ghost_img);
 			}
 
 			// chery img
@@ -329,7 +339,7 @@ function UpdatePosition()
 		}
 	}
 	if (x == 2) { //down
-		if (shape.j < 10 && board[shape.i][shape.j + 1] != 4) {
+		if (shape.j < (cnt_squere-1) && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 			faceDirect = [30, 0.65 * Math.PI, 0.35 * Math.PI, 15, 0, 5, 0, 2 * Math.PI];
 		}
@@ -341,7 +351,7 @@ function UpdatePosition()
 		}
 	}
 	if (x == 4) { //right
-		if (shape.i < 10 && board[shape.i + 1][shape.j] != 4) {
+		if (shape.i < (cnt_squere-1) && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
 			faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
 		}
@@ -351,13 +361,9 @@ function UpdatePosition()
 	if ( time_elapsed <= game_time * 0.1) {
 		pac_color = "green";
 	}
-	var food1 = Math.round(0.6*game_food);
-	var food2 = Math.round(0.3*game_food);
-	var food3 = Math.round(0.1*game_food);
-	
 
-
-	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
+	if(foods == 0)
+	{
 		window.alert("Winner");	
 		GameExit();
 	}
@@ -366,6 +372,7 @@ function UpdatePosition()
 		clearIntervalPosition()
 		loseMessage()
 		music.pause();
+		music.currentTime = 0;
 		Welcome();
 	}
 	// pacman get eaten by ghost
@@ -401,10 +408,13 @@ function UpdatePosition()
 	// score configuration
 		if (board[shape.i][shape.j] == 1.1) {
 			score = score + food1Point;
+			foods--;
 		} else if(board[shape.i][shape.j] == 1.2) {
 			score = score + food2Point;
+			foods--;
 		} else if(board[shape.i][shape.j] == 1.3) {
 			score = score + food3Point;
+			foods--;
 		}
 		//pacman get bonus time when he ate the hourglass
 		if(board[shape.i][shape.j] == 3)
@@ -491,6 +501,3 @@ function NewGame()
 	music.currentTime = 0;
 	Game_page();
 }
-
-
-

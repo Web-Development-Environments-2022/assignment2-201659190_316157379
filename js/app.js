@@ -57,7 +57,7 @@ function Start()
 	foods = game_food;
 	pac_color = "yellow";
 	// size of the matrix
-	cnt = 400;
+	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
 	// music.play();
 	activeMonsters = new Array();
@@ -399,7 +399,7 @@ function UpdatePosition()
 		else
 		{
 			SetIntervalPosition();
-			time_elapsed = time_elapsed - 0.1;
+			time_elapsed = time_elapsed - 0.25;
 			Draw();
 		}
 	}
@@ -422,7 +422,7 @@ function UpdatePosition()
 			time_elapsed = time_elapsed + bonusTime;
 		}
 		board[shape.i][shape.j] = 2;
-		time_elapsed = time_elapsed - 0.1;
+		time_elapsed = time_elapsed - 0.25;
 		Draw();
 	}
 }
@@ -430,49 +430,49 @@ function UpdatePosition()
 function ClearIntervalPosition(){
 	window.clearInterval(interval);
 	window.clearInterval(intervalMonster);
-	window.clearInterval(intervalChery);
+	// window.clearInterval(intervalChery);
 
 }
 function SetIntervalPosition()		{
 	interval = setInterval(UpdatePosition, 250);// 250
-	intervalMonster = setInterval(GhostMove, 350);
-	intervalChery = setInterval(UpdateChery, 350)
+	intervalMonster = setInterval(GhostMove, 250);
+	// intervalChery = setInterval(UpdateChery, 250)
 
 }
 
 
 
 
-function UpdateChery(){
+// function UpdateChery(){
 
-	var chery_row = chery_obj.i;
-	var chery_col = chery_obj.j;
-	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
+// 	var chery_row = chery_obj.i;
+// 	var chery_col = chery_obj.j;
+// 	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
 
-	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
-		chery_obj.j--;
-	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
-		chery_obj.j++;
-	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
-		chery_obj.i--;
-	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
-		chery_obj.i++;
-	}
+// 	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
+// 		chery_obj.j--;
+// 	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
+// 		chery_obj.j++;
+// 	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
+// 		chery_obj.i--;
+// 	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
+// 		chery_obj.i++;
+// 	}
 
-	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
-		PacmanEatChery();
-	}
+// 	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
+// 		PacmanEatChery();
+// 	}
 	
-}
-function PacmanEatChery(){
+// }
+// function PacmanEatChery(){
 
-	window.clearInterval(intervalChery);
-	score += 50;
-	chery_obj.i = -1;
-	chery_obj.j = -1;
+// 	window.clearInterval(intervalChery);
+// 	score += 50;
+// 	chery_obj.i = -1;
+// 	chery_obj.j = -1;
 
 
-}
+// }
 
 function LoseMessage()
 {

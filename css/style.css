@@ -17,8 +17,8 @@ body
 
 #canvas
 {
-    width: 200vh;
-    height: 140vh;
+    width: 100vh;
+    height: 70vh;
     background-color: aqua;
     /* background-color: white; */
 
@@ -34,11 +34,11 @@ footer
     font-size: 2vh;
 }
 
-.screen
+/* .screen
 {
-    /* padding-top: 5vh; */
-    /* margin-top: 5vh; */
-}
+    padding-top: 5vh;
+    margin-top: 5vh;
+} */
 
 
 

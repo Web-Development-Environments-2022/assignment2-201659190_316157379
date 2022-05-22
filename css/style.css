@@ -17,9 +17,11 @@ body
 
 #canvas
 {
+    /* outline: red 2vh solid; */
     width: 100vh;
     height: 70vh;
-    background-color: aqua;
+    background-image: url(/Images/navy.jpg);
+    /* background-color: aqua; */
     /* background-color: white; */
 
 }

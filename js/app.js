@@ -18,7 +18,7 @@ music.loop = true;
 var bonusTime = 10;
 var cnt;
 var cnt_squere;
-
+var timeToDecrease = 0.25;
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
@@ -50,7 +50,6 @@ $(document).ready(function()
 	validateLoginInput();
 	CheckSetting();
 	Welcome();
-	// Game_page();
 });
 
 
@@ -86,7 +85,7 @@ function Start()
 	food = game_food;
 
 	// configure the number of ghosts in the game
-	for (var k=0; k < monsters; k++)
+	for (let k=0; k < monsters; k++)
 	{
 		ghost = 
 		{
@@ -97,16 +96,16 @@ function Start()
 		};
 		activeMonsters.push(ghost);
 	}
-	//Add chery 
+	//Add chery to center of canvas
 	chery_obj.i = Math.floor(cnt_squere/2);
 	chery_obj.j = Math.floor(cnt_squere/2);
 
 
-	for (var i = 0; i < cnt_squere; i++) 
+	for (let i = 0; i < cnt_squere; i++) 
 	{
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < cnt_squere; j++) 
+		for (let j = 0; j < cnt_squere; j++) 
 		{
 			// 5 indicates ghost
 			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
@@ -130,7 +129,6 @@ function Start()
 			(i == 5 && j == 10 )||
 			(i == 5 && j == 12 )||
 			(i == 5 && j == 13 )||
-			(i == 5 && j == 14 )||
 			(i == 6 && j == 1) ||
 			(i == 6 && j == 2) ||
 			(i == 6 && j == 3) ||
@@ -149,7 +147,6 @@ function Start()
 			(i == 9 && j == 8) ||
 			(i == 9 && j == 3) ||
 			(i == 9 && j == 5) ||
-			(i == 9 && j == 14) ||
 			(i == 10 && j == 1) ||
 			(i == 10 && j == 2) ||
 			(i == 10 && j == 3) ||
@@ -167,9 +164,8 @@ function Start()
 			(i == 12 && j == 6) ||
 			(i == 12 && j == 10) ||
 			(i == 12 && j == 11) ||
-			(i == 12 && j == 13) ||
-			(i == 12 && j == 14) ||
-			(i == 12 && j == 15)
+			(i == 12 && j == 13) 
+			
 			) {
 				// 4 indicate wall
 				board[i][j] = 4;
@@ -237,8 +233,8 @@ function Start()
 	board[emptyCell[0]][emptyCell[1]] = 3;
 
 	
-	// add heart to canvas to add time to pacman if he eat it
-	var emptyCell = findRandomEmptyCell(board);
+	// add heart to canvas to add 1 strik to pacman if he eat it
+	emptyCell = findRandomEmptyCell(board);
 	board[emptyCell[0]][emptyCell[1]] = 7;
 
 
@@ -262,6 +258,7 @@ function Start()
 		false
 	);
 	setAllInterval();
+
 }
 
 function findRandomEmptyCell(board) {
@@ -302,8 +299,8 @@ function Draw() {
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblstrikes.value = striks;
-	for (var i = 0; i < cnt_squere; i++) {
-		for (var j = 0; j < cnt_squere; j++) {
+	for (let i = 0; i < cnt_squere; i++) {
+		for (let j = 0; j < cnt_squere; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
@@ -379,8 +376,11 @@ function Draw() {
 
 function UpdatePosition() 
 {
-	board[shape.i][shape.j] = 0;
-	
+	// if(shape.i != activeMonsters[0].i || shape.j != activeMonsters[0].j)
+	// {
+	// 	board[shape.i][shape.j] = 0;
+	// }
+	board[shape.i][shape.j] = 0;	
 	var x = GetKeyPressed();
 	if (x == 1) { //up
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
@@ -407,8 +407,9 @@ function UpdatePosition()
 		}
 	}
 
-	/// remind the user he have 10 seconds to finsih the game
-	if ( time_elapsed <= game_time * 0.1) {
+	/// remind the user he have 10% of the time to finsih the game
+	if ( time_elapsed <= game_time * 0.1) 
+	{
 		pac_color = "green";
 	}
 	if(foods == 0)
@@ -448,7 +449,7 @@ function UpdatePosition()
 		else
 		{
 			setAllInterval()
-			time_elapsed = time_elapsed - 0.1;
+			time_elapsed = time_elapsed - timeToDecrease;
 			Draw();
 		}
 	}
@@ -479,7 +480,7 @@ function UpdatePosition()
 			PacmanEatChery();
 		}
 		board[shape.i][shape.j] = 2;
-		time_elapsed = time_elapsed - 0.1;
+		time_elapsed = time_elapsed - timeToDecrease;
 		Draw();
 	}
 }
@@ -506,8 +507,8 @@ function UpdateChery(){
 }
 function PacmanEatChery(){
 
-	window.clearInterval(intervalChery);
-	score += 50;
+	// window.clearInterval(intervalChery);
+	score = score + 50;
 	chery_obj.i = -1;
 	chery_obj.j = -1;
 
@@ -551,7 +552,7 @@ function setAllInterval()
 
 function ClearAllInterval()
 {
-	window.clearInterval(interval);
 	window.clearInterval(intervalMonster);
 	window.clearInterval(intervalChery);
+	window.clearInterval(interval);
 }

@@ -1,5 +1,5 @@
-lastCell = [0, 0, 0, 0];
-
+var lastCell = [0, 0, 0, 0];
+// var lastSteps = [-1, -1, -1, -1];
 var monstersLocation = [
 	{
 		i: 0,
@@ -20,7 +20,7 @@ var monstersLocation = [
 ];
 
 var ghost1 = new Image();
-ghost1.src = "./Images/regular_ghost.png";
+ghost1.src = "./Images/red_ghost.png";
 ghost1.onerror = function(){
 	alert("img1 error");
 }
@@ -55,10 +55,8 @@ function GhostMove()
 		{
 			lastCell[k] = 0;
 		}
-		else
-		{
-			board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
-		}
+		board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
+
 		//pacman is up
 		if (shape.i < activeMonsters[k].i )
 		{ 
@@ -140,6 +138,38 @@ function GhostMove()
 			lastCell[k] = board[activeMonsters[k].i][activeMonsters[k].j];
 			board[activeMonsters[k].i][activeMonsters[k].j] = 5;
 		}
+		Draw();
+
+		// check if after position change one of the ghost eat pacman
+		if( GetEaten())
+		{
+			ClearAllInterval();
+			alert("you get eaten");
+			if(score <= 10)
+			{
+				score = 0
+			}
+			else
+			{
+				score = score - 10;
+			}
+			striks--;
+			lblstrikes.value = striks;
+			resetGhostsLocation();
+			if(striks == 0)
+			{
+				loseMessage();
+				GameExit();
+			}
+			else
+			{
+				setAllInterval()
+				time_elapsed = time_elapsed - timeToDecrease;
+				Draw();
+			}
+		}
+
+
 	}
 }
 

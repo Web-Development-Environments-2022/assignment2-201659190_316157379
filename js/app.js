@@ -39,7 +39,6 @@ $(document).ready(function()
 	validateLoginInput();
 	CheckSetting();
 	Welcome();
-	// Game_page();
 });
 
 

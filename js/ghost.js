@@ -1,5 +1,5 @@
-lastCell = [0, 0, 0, 0];
-
+var lastCell = [0, 0, 0, 0];
+var lastSteps = [-1, -1, -1, -1];
 var monstersLocation = [
 	{
 		i: 0,

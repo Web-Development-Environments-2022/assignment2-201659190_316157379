@@ -20,11 +20,17 @@ var bonusTime = 10;
 var cnt = 225;
 var cnt_squere = Math.sqrt(cnt);
 pac_color = "yellow";
+
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
 	alert("img error");
 }
+
+var chery = new Image();
+chery.src = "./Images/chery2.png";
+var chery_obj = new Object();
+
 var activeMonsters;
 var monsters;
 var ghost = new Object();
@@ -71,6 +77,11 @@ function Start()
 	monsters = parseInt(monster_number);
 	food = game_food;
 
+	//Add chery position add canvc center
+	chery_obj.i = Math.floor(cnt_squere/2);
+	chery_obj.j = Math.floor(cnt_squere/2);
+	chery_obj.img = chery;
+	
 	// configure the number of ghosts in the game
 	for (var k=0; k < monsters; k++)
 	{
@@ -81,13 +92,15 @@ function Start()
 		activeMonsters.push(ghost);
 	}
 
-
 	for (var i = 0; i < cnt_squere; i++) {
 
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < cnt_squere; j++) 
 		{
+
+
+
 			// 5 indicates ghost
 			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
 			if(ghost !== undefined)
@@ -107,6 +120,12 @@ function Start()
 				// 4 indicate wall
 				board[i][j] = 4;
 			}
+
+			// 6 indicates chery
+			else if(chery_obj.i == i && chery_obj.j == j) {
+				board[i][j] = 6;
+			}
+
 			else 
 			{
 				var randomNum = Math.random();
@@ -145,6 +164,8 @@ function Start()
 			cnt--;
 		}
 	}
+
+	//pakman
 	board[shape.i][shape.j] = 2;
 	while (food1 > 0) {
 		var emptyCell = findRandomEmptyCell(board);
@@ -184,8 +205,10 @@ function Start()
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);// 250
-	intervalMonster = setInterval(GhostMove, 350);
+	SetIntervalPosition();
+	// interval = setInterval(UpdatePosition, 250);//  run auto fun evry 0.25 sec
+	// intervalMonster = setInterval(GhostMove, 350); // run auto fun evry 0.35 sec // change UpdateGhost
+	// intervalChery = setInterval(updateChery, 350); //run auto fun evry 0.35 sec
 }
 
 function findRandomEmptyCell(board) {
@@ -283,7 +306,14 @@ function Draw() {
 			{
 				drawGhost(context, center);
 			}
+
+			// chery img
+			if (chery_obj.i == i && chery_obj.j == j){ 
+				context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
+			}
+
 		}
+
 	}
 }
 
@@ -326,19 +356,14 @@ function UpdatePosition()
 	var food3 = Math.round(0.1*game_food);
 	
 
-	// window.clearInterval(interval);
-	// window.clearInterval(intervalMonster);
+
 	if (score === (food1 * food1Point + food2 * food2Point + food3 * food3Point)) {
-		// window.clearInterval(interval);
-		// window.clearInterval(intervalMonster);
 		window.alert("Winner");	
-		// music.pause();
 		GameExit();
 	}
 	else if(time_elapsed <= 0)
 	{
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
+		clearIntervalPosition()
 		loseMessage()
 		music.pause();
 		Welcome();
@@ -346,8 +371,7 @@ function UpdatePosition()
 	// pacman get eaten by ghost
 	else if(GetEaten())
 	{
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
+		clearIntervalPosition()
 		alert("you get eaten");
 		if(score <= 10)
 		{
@@ -367,8 +391,7 @@ function UpdatePosition()
 		}
 		else
 		{
-			interval = setInterval(UpdatePosition, 250);// 250
-			intervalMonster = setInterval(GhostMove, 350);
+			SetIntervalPosition();
 			time_elapsed = time_elapsed - 0.1;
 			Draw();
 		}
@@ -394,7 +417,54 @@ function UpdatePosition()
 	}
 }
 
-function loseMessage()
+function ClearIntervalPosition(){
+	window.clearInterval(interval);
+	window.clearInterval(intervalMonster);
+	window.clearInterval(intervalChery);
+
+}
+function SetIntervalPosition()		{
+	interval = setInterval(UpdatePosition, 250);// 250
+	intervalMonster = setInterval(GhostMove, 350);
+	intervalChery = setInterval(UpdateChery, 350)
+
+}
+
+
+
+
+function UpdateChery(){
+
+	var chery_row = chery_obj.i;
+	var chery_col = chery_obj.j;
+	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
+
+	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
+		chery_obj.j--;
+	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
+		chery_obj.j++;
+	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
+		chery_obj.i--;
+	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
+		chery_obj.i++;
+	}
+
+	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
+		PacmanEatChery();
+	}
+	
+}
+function PacmanEatChery(){
+
+	window.clearInterval(intervalChery);
+	score += 50;
+	chery_obj.i = -1;
+	chery_obj.j = -1;
+
+
+}
+
+function LoseMessage()
 {
 	if(score < 100)
 	{
@@ -408,17 +478,15 @@ function loseMessage()
 
 function GameExit()
 {
-		window.clearInterval(interval);
-		window.clearInterval(intervalMonster);
-		music.pause();
-		music.currentTime = 0;
-		Welcome();
+	clearIntervalPosition()
+	music.pause();
+	music.currentTime = 0;
+	Welcome();
 }
 
 function NewGame()
 {
-	window.clearInterval(interval);
-	window.clearInterval(intervalMonster);
+	clearIntervalPosition()
 	music.pause();
 	music.currentTime = 0;
 	Game_page();

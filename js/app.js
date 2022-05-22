@@ -174,9 +174,9 @@ function Start()
 				// 4 indicate wall
 				board[i][j] = 4;
 			}
-			else if ((chery_obj.i == i && chery_obj.j == j)){
-				board[i][j] = 6;
-			}
+			// else if ((chery_obj.i == i && chery_obj.j == j)){
+			// 	board[i][j] = 6;
+			// }
 			else 
 			{
 				var randomNum = Math.random();
@@ -360,19 +360,21 @@ function Draw() {
 				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
 				drawGhost(context, center, ghost_img);
 			}
-			// chery img
-			else if(board[i][j] == 6)
-			{
-				context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
-			}
 
 			// heart that grent time bonus
 			else if (board[i][j] == 7) 
 			{
 					context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
 			}
+			// chery img
+			if (chery_obj.i == i && chery_obj.j == j){ 
+				{
+					context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
+				}
+			
 		}
 	}
+}
 }
 
 function UpdatePosition() 
@@ -464,7 +466,7 @@ function UpdatePosition()
 			foods--;
 		}
 		//pacman get bonus time when he ate the hourglass
-		if(board[shape.i][shape.j] == 3)
+		else if(board[shape.i][shape.j] == 3)
 		{
 			time_elapsed = time_elapsed + bonusTime;
 		}
@@ -472,6 +474,9 @@ function UpdatePosition()
 		else if(board[shape.i][shape.j] == 7)
 		{
 			striks += 1;
+		}
+		if (shape.i == chery_obj.i && shape.j == chery_obj.j){
+			PacmanEatChery();
 		}
 		board[shape.i][shape.j] = 2;
 		time_elapsed = time_elapsed - 0.1;
@@ -541,10 +546,12 @@ function setAllInterval()
 {
 	interval = setInterval(UpdatePosition, 250);// 250
 	intervalMonster = setInterval(GhostMove, 350);
+	intervalChery = setInterval(UpdateChery, 250);
 }
 
 function ClearAllInterval()
 {
 	window.clearInterval(interval);
 	window.clearInterval(intervalMonster);
+	window.clearInterval(intervalChery);
 }

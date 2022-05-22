@@ -27,6 +27,7 @@ hourGlass.onerror = function(){
 var activeMonsters;
 var monsters;
 var ghost = new Object();
+var inGame = false;
 
 var heart = new Image();
 heart.src = "./Images/heart.png";
@@ -56,12 +57,13 @@ $(document).ready(function()
 
 function Start() 
 {
+	inGame = true;
 	foods = game_food;
 	pac_color = "yellow";
 	// size of the matrix
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
-	// music.play();
+	music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -507,7 +509,7 @@ function UpdateChery(){
 }
 function PacmanEatChery(){
 
-	// window.clearInterval(intervalChery);
+	window.clearInterval(intervalChery);
 	score = score + 50;
 	chery_obj.i = -1;
 	chery_obj.j = -1;
@@ -532,6 +534,7 @@ function GameExit()
 		ClearAllInterval()
 		music.pause();
 		music.currentTime = 0;
+		inGame = false;
 		Welcome();
 }
 
@@ -540,6 +543,7 @@ function NewGame()
 	ClearAllInterval()
 	music.pause();
 	music.currentTime = 0;
+	inGame = false;
 	Game_page();
 }
 

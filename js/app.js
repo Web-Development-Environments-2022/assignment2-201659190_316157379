@@ -48,7 +48,8 @@ function Start()
 {
 	foods = game_food;
 	pac_color = "yellow";
-	cnt = 225;
+	// size of the matrix
+	cnt = 400;
 	cnt_squere = Math.sqrt(cnt);
 	// music.play();
 	activeMonsters = new Array();
@@ -76,12 +77,6 @@ function Start()
 	// configure the number of ghosts in the game
 	for (var k=0; k < monsters; k++)
 	{
-		// ghost = 
-		// {
-		// 	i: monstersLocation[k].i,
-		// 	j: monstersLocation[k].j
-		// };
-
 		ghost = 
 		{
 			// ghosts configure in ghost js file
@@ -293,7 +288,6 @@ function Draw() {
 			else if(board[i][j] == 5)
 			{
 				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
-
 				drawGhost(context, center, ghost_img);
 			}
 		}

@@ -45,53 +45,35 @@ ghost4.onerror = function(){
 
 var ghosts = [ghost1, ghost2, ghost3, ghost4];
 
-// var ghosts = [
-// 	{
-// 		image: ghost1,
-// 		i: 0,
-// 		j: 0 
-// 	},
-// 	{
-// 		image: ghost1,
-// 		i: 0,
-// 		j: 14 
-// 	},
-// 	{
-// 		image: ghost1,
-// 		i: 14,
-// 		j: 0 
-// 	},
-// 	{
-// 		image: ghost1,
-// 		i: 14,
-// 		j: 14 
-// 	}
-// ];
-
 function GhostMove()
 {
-    // diffX = Math.abs(activeMonsters.i - shape.i);
-    // diffY = Math.abs(activeMonsters.j - shape.j);
 	for(var k = 0; k < monsters; k++)
 	{
-		diffX = Math.abs(activeMonsters[k].i - shape.i);
-		diffY = Math.abs(activeMonsters[k].j - shape.j);
-		board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
+		// diffX = Math.abs(activeMonsters[k].i - shape.i);
+		// diffY = Math.abs(activeMonsters[k].j - shape.j);
+		if(lastCell[k] == 2)
+		{
+			lastCell[k] = 0;
+		}
+		else
+		{
+			board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
+		}
 		//pacman is up
 		if (shape.i < activeMonsters[k].i )
 		{ 
 			// ghost need to go up
-			if (activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4) 
+			if (CheckStepUp(k))
 			{
 				activeMonsters[k].i--;
 			}
 			// ghost need to go right
-			else if(activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			else if(CheckStepRight(k))
 			{
 				activeMonsters[k].j++;
 			}
 			//// ghost need to go left
-			else if(activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			else if(CheckStepLeft(k))
 			{
 				activeMonsters[k].j--;
 			}
@@ -100,17 +82,17 @@ function GhostMove()
 		else if (shape.i > activeMonsters[k].i)
 		{ 
 			// ghost need to go down
-			if (activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4) 
+			if (CheckStepDown(k))
 			{
 				activeMonsters[k].i++;
 			}
 			// ghost need to go right
-			else if(activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j+1] != 4)
+			else if(CheckStepRight(k))
 			{
 				activeMonsters[k].j++;
 			}
 			// ghost need to go left
-			else if(activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j-1] != 4)
+			else if(CheckStepLeft(k))
 			{
 				activeMonsters[k].j--;
 			}
@@ -119,17 +101,17 @@ function GhostMove()
 		else if (shape.j > activeMonsters[k].j)
 		{ 
 			// ghost need to go right
-			if (activeMonsters[k].j < cnt_squere-1 && board[activeMonsters[k].i][activeMonsters[k].j + 1] != 4) 
+			if (CheckStepRight(k))
 			{
 				activeMonsters[k].j++;
 			}
 			// ghost need to go down
-			else if(activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			else if(CheckStepDown(k))
 			{
 				activeMonsters[k].i++;
 			}
 			// ghost need to go up
-			else if(activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			else if(CheckStepUp(k))
 			{
 				activeMonsters[k].i--;
 			}
@@ -138,87 +120,27 @@ function GhostMove()
 		else if (shape.j < activeMonsters[k].j)
 		{ 
 			// ghost need to go left
-			if (activeMonsters[k].j > 0 && board[activeMonsters[k].i][activeMonsters[k].j - 1] != 4) 
+			if (CheckStepLeft(k))
 			{
 				activeMonsters[k].j--;
 			}
 			// ghost need to go down
-			else if(activeMonsters[k].i < cnt_squere-1 && board[activeMonsters[k].i+1][activeMonsters[k].j] != 4)
+			else if(CheckStepDown(k))
 			{
 				activeMonsters[k].i++;
 			}
 			// ghost need to go up
-			else if(activeMonsters[k].i > 0 && board[activeMonsters[k].i-1][activeMonsters[k].j] != 4)
+			else if(CheckStepUp(k))
 			{
 				activeMonsters[k].i--;
 			}
 		}
-		lastCell[k] = board[activeMonsters[k].i][activeMonsters[k].j];
-		board[activeMonsters[k].i][activeMonsters[k].j] = 5;
+		if(lastCell[k] !== 5)
+		{
+			lastCell[k] = board[activeMonsters[k].i][activeMonsters[k].j];
+			board[activeMonsters[k].i][activeMonsters[k].j] = 5;
+		}
 	}
-	// board[activeMonsters.i][activeMonsters.j] = lastCell;
-	// if (shape.i < activeMonsters.i)
-	// { //up
-	// 	if (board[activeMonsters.i-1][activeMonsters.j] != 4) 
-	// 	{
-	// 		activeMonsters.i--;
-	// 	}
-	// 	else if(board[activeMonsters.i][activeMonsters.j+1] != 4)
-	// 	{
-	// 		activeMonsters.j++;
-	// 	}
-	// 	else if(board[activeMonsters.i][activeMonsters.j-1] != 4)
-	// 	{
-	// 		activeMonsters.j--;
-	// 	}
-	// }
-	// else if (shape.i > activeMonsters.i)
-	// { //down
-	// 	if (board[activeMonsters.i+1][activeMonsters.j] != 4) 
-	// 	{
-	// 		activeMonsters.i++;
-	// 	}
-	// 	else if(board[activeMonsters.i][activeMonsters.j+1] != 4)
-	// 	{
-	// 		activeMonsters.j++;
-	// 	}
-	// 	else if(board[activeMonsters.i][activeMonsters.j-1] != 4)
-	// 	{
-	// 		activeMonsters.j--;
-	// 	}
-	// }
-	// else if (shape.j > activeMonsters.j)
-	// { //right
-	// 	if (board[activeMonsters.i][activeMonsters.j + 1] != 4) 
-	// 	{
-	// 		activeMonsters.j++;
-	// 	}
-	// 	else if(board[activeMonsters.i+1][activeMonsters.j] != 4)
-	// 	{
-	// 		activeMonsters.i++;
-	// 	}
-	// 	else if(board[activeMonsters.i-1][activeMonsters.j] != 4)
-	// 	{
-	// 		activeMonsters.i--;
-	// 	}
-	// }
-	// else if (shape.j < activeMonsters.j)
-	// { //left
-	// 	if (board[activeMonsters.i][activeMonsters.j - 1] != 4) 
-	// 	{
-	// 		activeMonsters.i--;
-	// 	}
-	// 	else if(board[activeMonsters.i+1][activeMonsters.j] != 4)
-	// 	{
-	// 		activeMonsters.i++;
-	// 	}
-	// 	else if(board[activeMonsters.i-1][activeMonsters.j] != 4)
-	// 	{
-	// 		activeMonsters.i--;
-	// 	}
-	// }
-    // lastCell = board[activeMonsters.i][activeMonsters.j];
-	// board[activeMonsters.i][activeMonsters.j] = 5;
 }
 
 function drawGhost(ctx, center, ghost_img) 
@@ -251,4 +173,48 @@ function resetGhostsLocation()
 		board[activeMonsters[k].i][activeMonsters[k].j] = 5;
 		lastCell[k] = 0;
 	}
+}
+
+function CheckStepUp(k)
+{
+	if (activeMonsters[k].i > 0 && 
+		board[activeMonsters[k].i-1][activeMonsters[k].j] != 4 &&
+		board[activeMonsters[k].i-1][activeMonsters[k].j] != 5)
+	{
+		return true;
+	}
+	return false;
+}
+
+function CheckStepDown(k)
+{
+	if (activeMonsters[k].i < cnt_squere && 
+		board[activeMonsters[k].i+1][activeMonsters[k].j] != 4 && 
+		board[activeMonsters[k].i+1][activeMonsters[k].j] != 5)
+	{
+		return true;
+	}
+	return false;
+}
+
+function CheckStepRight(k)
+{
+	if (activeMonsters[k].j < cnt_squere && 
+		board[activeMonsters[k].i][activeMonsters[k].j+1] != 4 && 
+		board[activeMonsters[k].i][activeMonsters[k].j+1] != 5)
+	{
+		return true;
+	}
+	return false;
+}
+
+function CheckStepLeft(k)
+{
+	if (activeMonsters[k].j > 0 && 
+		board[activeMonsters[k].i][activeMonsters[k].j-1] != 4 && 
+		board[activeMonsters[k].i][activeMonsters[k].j-1] != 5)
+	{
+		return true;
+	}
+	return false;
 }

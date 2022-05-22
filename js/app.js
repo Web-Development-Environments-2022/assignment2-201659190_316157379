@@ -28,6 +28,17 @@ var activeMonsters;
 var monsters;
 var ghost = new Object();
 
+var heart = new Image();
+heart.src = "./Images/heart.png";
+heart.onerror = function(){
+	alert("img error");
+}
+
+var chery = new Image();
+chery.src = "./Images/chery2.png";
+var chery_obj = new Object();
+chery_obj.img = chery;
+
 
 
 
@@ -86,6 +97,9 @@ function Start()
 		};
 		activeMonsters.push(ghost);
 	}
+	//Add chery 
+	chery_obj.i = Math.floor(cnt_squere/2);
+	chery_obj.j = Math.floor(cnt_squere/2);
 
 
 	for (var i = 0; i < cnt_squere; i++) 
@@ -160,6 +174,9 @@ function Start()
 				// 4 indicate wall
 				board[i][j] = 4;
 			}
+			else if ((chery_obj.i == i && chery_obj.j == j)){
+				board[i][j] = 6;
+			}
 			else 
 			{
 				var randomNum = Math.random();
@@ -218,6 +235,13 @@ function Start()
 	// add hourglass to canvas to add time to pacman if he eat it
 	var emptyCell = findRandomEmptyCell(board);
 	board[emptyCell[0]][emptyCell[1]] = 3;
+
+	
+	// add heart to canvas to add time to pacman if he eat it
+	var emptyCell = findRandomEmptyCell(board);
+	board[emptyCell[0]][emptyCell[1]] = 7;
+
+
 
 
 
@@ -337,6 +361,17 @@ function Draw() {
 				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
 				drawGhost(context, center, ghost_img);
 			}
+			// chery img
+			else if(board[i][j] == 6)
+			{
+				context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
+			}
+
+			// heart that grent time bonus
+			else if (board[i][j] == 7) 
+			{
+					context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
+			}
 		}
 	}
 }
@@ -437,10 +472,45 @@ function UpdatePosition()
 		{
 			time_elapsed = time_elapsed + bonusTime;
 		}
+		//pacman get bonus life when he ate the heart
+		else if(board[shape.i][shape.j] == 7)
+		{
+			striks += 1;
+		}
 		board[shape.i][shape.j] = 2;
 		time_elapsed = time_elapsed - 0.1;
 		Draw();
 	}
+}
+function UpdateChery(){
+
+	var chery_row = chery_obj.i;
+	var chery_col = chery_obj.j;
+	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
+
+	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
+		chery_obj.j--;
+	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
+		chery_obj.j++;
+	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
+		chery_obj.i--;
+	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
+		chery_obj.i++;
+	}
+
+	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
+		PacmanEatChery();
+	}
+	
+}
+function PacmanEatChery(){
+
+	window.clearInterval(intervalChery);
+	score += 50;
+	chery_obj.i = -1;
+	chery_obj.j = -1;
+
+
 }
 
 function loseMessage()

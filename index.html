@@ -5,9 +5,8 @@
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/menubar.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
-
-
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
+		<link rel="icon" type="Images/jpg" href="/Images/logo4.jpg" >
 
 		
 		<!-- Model jquery -->
@@ -34,17 +33,18 @@
 	<body>
 		<header>
 			<!-- need to add submiters details -->
-			<title>Pacman</title>
-			<nav class="navbar">
-				<menu class="menubar">
-					<i class="fa-solid fa-ghost" id="icon"></i>
-					<a href="#welcome" onclick="Welcome()">Walcome</a>
-					<a href="#register" onclick="Register()">Register</a>
-					<a href="#login" onclick="Login()">Login</a>
-					<a href="#about"  class="dialog"  onclick="About()">About</a>
-				</menu>
-			</nav>
+			<title>Avichai & Inbar & Shahar - Pacman</title>
+
 		</header>
+		<nav class="navbar">
+			<menu class="menubar">
+				<i class="fa-solid fa-ghost" id="icon"></i>
+				<a href="#welcome" onclick="Welcome()">Walcome</a>
+				<a href="#register" onclick="Register()">Register</a>
+				<a href="#login" onclick="Login()">Login</a>
+				<a href="#about"  class="dialog"  onclick="About()">About</a>
+			</menu>
+		</nav>
 		<div id="content">
 			<div class="screen" id="welcome_menu">
 				<form id="menu_form">
@@ -158,15 +158,23 @@
 				</form>
 			</div>
 			<!-- need to update text -->
-			<div class="screen" id="about_menu" dir = "ldr">
+			<div class="screen" id="about_menu" dir = "rtl">
 
 				<p>
 					<b> מגישים: </b>
-					שחר חדד - 
-					אביחי אדרי - 
-					ענבר זכאים - 
-					
-					<b> jQuery P</b>
+					<br>
+					שחר חדד ,אביחי אדרי וענבר זכאים
+					<br>
+					<b> jQuery Plugin</b>
+					<br>
+					השתמשנו בפונקציה -  dialog על מנת לייצר את החלון המודולרי 
+					<br>
+					<b>קשיים:</b>
+					<br>
+					1. התוכנה לא מספקת פידבק של שגיאות ולא ניתן לבצע דיבאג בקלות
+					<br>
+					2. בנוסף התקשנו בפונקצינאליות של ה-about בשלב שבו היה צריך לצאת מהחלון ע"י לחיצה מחוץ לחלון
+					<br>
 				</p>
 			</div>
 
@@ -189,7 +197,7 @@
 				</div>
 				<div  class="middle_box" id="game"> 
 					<h2 id="userToPut2"></h2>
-					<canvas id="canvas" height="900" width="900"></canvas>
+					<canvas id="canvas" height="1000" width="1000"></canvas>
 					<br>
 					<button type="button" onclick="GameExit()">Exit</button>
 					<button type="button" onclick="NewGame()">New game</button>

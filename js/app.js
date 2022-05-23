@@ -13,29 +13,30 @@ var food3Point = 25;
 var foods;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
-// var music = new Audio("./audio/pacman2.WAV");
-// music.loop = true;
+var music = new Audio("./audio/pacman2.wav");
+music.loop = true;
 var bonusTime = 10;
 var cnt;
 var cnt_squere;
 var timeToDecrease = 0.25;
 var hourGlass = new Image();
-hourGlass.src = "/Images/hourglass.PNG";
+hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
-	alert("hourGlass img error");
+	alert("img error");
 }
 var activeMonsters;
 var monsters;
 var ghost = new Object();
+var inGame = false;
 
 var heart = new Image();
-heart.src = "/Images/heart.PNG";
+heart.src = "./Images/heart.png";
 heart.onerror = function(){
-	alert("heart img error");
+	alert("img error");
 }
 
 var chery = new Image();
-chery.src = "/Images/chery2.PNG";
+chery.src = "./Images/chery2.png";
 var chery_obj = new Object();
 chery_obj.img = chery;
 
@@ -56,12 +57,13 @@ $(document).ready(function()
 
 function Start() 
 {
+	inGame = true;
 	foods = game_food;
 	pac_color = "yellow";
 	// size of the matrix
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
-	// music.play();
+	music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -421,8 +423,8 @@ function UpdatePosition()
 	{
 		ClearAllInterval();
 		loseMessage()
-		// music.pause();
-		// music.currentTime = 0;
+		music.pause();
+		music.currentTime = 0;
 		Welcome();
 	}
 	// pacman get eaten by ghost
@@ -507,7 +509,7 @@ function UpdateChery(){
 }
 function PacmanEatChery(){
 
-	// window.clearInterval(intervalChery);
+	window.clearInterval(intervalChery);
 	score = score + 50;
 	chery_obj.i = -1;
 	chery_obj.j = -1;
@@ -532,6 +534,7 @@ function GameExit()
 		ClearAllInterval()
 		music.pause();
 		music.currentTime = 0;
+		inGame = false;
 		Welcome();
 }
 
@@ -540,6 +543,7 @@ function NewGame()
 	ClearAllInterval()
 	music.pause();
 	music.currentTime = 0;
+	inGame = false;
 	Game_page();
 }
 

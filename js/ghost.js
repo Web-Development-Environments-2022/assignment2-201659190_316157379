@@ -49,8 +49,6 @@ function GhostMove()
 {
 	for(var k = 0; k < monsters; k++)
 	{
-		// diffX = Math.abs(activeMonsters[k].i - shape.i);
-		// diffY = Math.abs(activeMonsters[k].j - shape.j);
 		if(lastCell[k] == 2)
 		{
 			lastCell[k] = 0;
@@ -168,8 +166,6 @@ function GhostMove()
 				Draw();
 			}
 		}
-
-
 	}
 }
 

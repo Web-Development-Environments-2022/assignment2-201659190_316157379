@@ -27,6 +27,7 @@ hourGlass.onerror = function(){
 var activeMonsters;
 var monsters;
 var ghost = new Object();
+var inGame = false;
 
 var heart = new Image();
 heart.src = "./Images/heart.png";
@@ -56,12 +57,13 @@ $(document).ready(function()
 
 function Start() 
 {
+	inGame = true;
 	foods = game_food;
 	pac_color = "yellow";
 	// size of the matrix
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
-	// music.play();
+	music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -96,7 +98,7 @@ function Start()
 		};
 		activeMonsters.push(ghost);
 	}
-	//Add chery to center of canvas
+	// Add chery to center of canvas
 	chery_obj.i = Math.floor(cnt_squere/2);
 	chery_obj.j = Math.floor(cnt_squere/2);
 
@@ -361,17 +363,17 @@ function Draw() {
 			// heart that grent time bonus
 			else if (board[i][j] == 7) 
 			{
-					context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
+				context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
 			}
 			// chery img
-			if (chery_obj.i == i && chery_obj.j == j){ 
-				{
-					context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
-				}
+			if (chery_obj.i == i && chery_obj.j == j)
+			{
+				context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
+			}
 			
+		
 		}
 	}
-}
 }
 
 function UpdatePosition() 
@@ -507,12 +509,10 @@ function UpdateChery(){
 }
 function PacmanEatChery(){
 
-	// window.clearInterval(intervalChery);
+	window.clearInterval(intervalChery);
 	score = score + 50;
 	chery_obj.i = -1;
 	chery_obj.j = -1;
-
-
 }
 
 function loseMessage()
@@ -532,6 +532,7 @@ function GameExit()
 		ClearAllInterval()
 		music.pause();
 		music.currentTime = 0;
+		inGame = false;
 		Welcome();
 }
 
@@ -540,6 +541,7 @@ function NewGame()
 	ClearAllInterval()
 	music.pause();
 	music.currentTime = 0;
+	inGame = false;
 	Game_page();
 }
 

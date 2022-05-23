@@ -3,10 +3,6 @@ var current_user = "";
 /////////////////////// welcome section ///////////////////////////
 function Welcome()
 {
-	if (inGame)
-	{
-		GameExit();
-	}
 	// window.localStorage.clear();
 	if(current_user == "")
 	{
@@ -56,10 +52,7 @@ function setUserToStorage(user)
 /////////////////////// register section ///////////////////////////
 function Register()
 {
-	if (inGame)
-	{
-		GameExit();
-	}
+	window.clearInterval(interval);
 	$(".screen").hide();
 	$("#register_menu").show();
 }
@@ -115,10 +108,7 @@ function addUser()
 /////////////////////// login section ///////////////////////////
 function Login()
 {
-	if (inGame)
-	{
-		GameExit();
-	}
+	window.clearInterval(interval);
 	$(".screen").hide();
 	$("#login_menu").show();
 }
@@ -292,7 +282,8 @@ function About() {
 	window.clearInterval(interval);
 	$("#about_menu").dialog({
 		model: true,
-		title: "About",
+		//autoOpen: false,
+		title: "test",
 		hight: 600,
 		width: 800,
 		draggable: false,

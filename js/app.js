@@ -375,13 +375,9 @@ function Draw() {
 		}
 	}
 }
-
 function UpdatePosition() 
 {
-	// if(shape.i != activeMonsters[0].i || shape.j != activeMonsters[0].j)
-	// {
-	// 	board[shape.i][shape.j] = 0;
-	// }
+
 	board[shape.i][shape.j] = 0;	
 	var x = GetKeyPressed();
 	if (x == 1) { //up
@@ -430,7 +426,9 @@ function UpdatePosition()
 	// pacman get eaten by ghost
 	else if(GetEaten())
 	{
+		
 		ClearAllInterval();
+		x = 0;
 		alert("you get eaten");
 		if(score <= 10)
 		{

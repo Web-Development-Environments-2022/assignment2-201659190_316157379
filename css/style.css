@@ -17,13 +17,10 @@ body
 
 #canvas
 {
-    /* outline: red 2vh solid; */
+
     width: 100vh;
     height: 70vh;
     background-image: url(/Images/navy.jpg);
-    /* background-color: aqua; */
-    /* background-color: white; */
-
 }
 
 footer
@@ -36,11 +33,6 @@ footer
     font-size: 2vh;
 }
 
-.screen
-{
-    /* padding-top: 5vh; */
-    /* margin-top: 5vh; */
-}
 
 
 

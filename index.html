@@ -5,10 +5,9 @@
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<link rel="stylesheet" type="text/css" href="./css/menubar.css">
 		<link rel="stylesheet" type="text/css" href="./css/game.css">
-		<script src="/js/app.js"></script>
-
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
-		<!-- qwer -->
+		<link rel="icon" type="Images/jpg" href="/Images/logo4.jpg" >
+
 		
 		<!-- Model jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -17,15 +16,12 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
-		<!-- <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script> -->
-		<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-		<!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script> -->
-		<!-- <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
-		<!-- not working yet -->
 
 		<script type="text/javascript" src="/js/app.js"></script>
 		<script type="text/javascript" src="/js/gameDB.js"></script>
 		<script type="text/javascript" src="/js/validation.js"></script>
+		<script type="text/javascript" src="/js/ghost.js"></script>
+		<script type="text/javascript" src="/js/pages.js"></script>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 		<!-- app logo imoji -->
@@ -36,25 +32,24 @@
 
 	<body>
 		<header>
-			<!-- add submiters details -->
-			<title>Pacman</title>
-			<nav class="navbar">
-				<menu class="menubar">
-					<i class="fa-solid fa-ghost" id="icon"></i>
-					<a href="#welcome" onclick="Welcome()">Walcome</a>
-					<a href="#register" onclick="Register()">Register</a>
-					<a href="#login" onclick="Login()">Login</a>
-					<a href="#about"  class="dialog"  onclick="About()">About</a>
-				</menu>
-			</nav>
+			<!-- need to add submiters details -->
+			<title>Avichai & Inbar & Shahar - Pacman</title>
+
 		</header>
+		<nav class="navbar">
+			<menu class="menubar">
+				<i class="fa-solid fa-ghost" id="icon"></i>
+				<a href="#welcome" onclick="Welcome()">Walcome</a>
+				<a href="#register" onclick="Register()">Register</a>
+				<a href="#login" onclick="Login()">Login</a>
+				<a href="#about"  class="dialog"  onclick="About()">About</a>
+			</menu>
+		</nav>
 		<div id="content">
 			<div class="screen" id="welcome_menu">
 				<form id="menu_form">
 					<h1>Welcome to pacman game</h1>
-					<h2>default login:</h2>
-					<h2>username: k</h2>
-					<h2>password: k</h2>
+
 					<button type="button" onclick="Register()">
 						Register
 					</button>
@@ -121,7 +116,6 @@
 					<button type="button"  class="dialog" onclick="About()">about</button>
 				</form>
 			</div>
-			<!-- need to update mor function -->
 			<div class="screen" id="setting_menu">
 				<form id="setting_menu_form">
 					<h1>Setting</h1>
@@ -163,24 +157,88 @@
 					<button type="button" onclick="Welcome()">Return to menu</button>
 				</form>
 			</div>
-			<!-- need to update text and also the popup window need to exit when click outside the popup window -->
-			<div class="screen" id="about_menu">
-				<p>testtttttttttttttttttttttttttttttttt!</p>
+			<!-- need to update text -->
+			<div class="screen" id="about_menu" dir = "rtl">
+
+				<p>
+					<b> מגישים: </b>
+					<br>
+					שחר חדד ,אביחי אדרי וענבר זכאים
+					<br>
+					<b> jQuery Plugin</b>
+					<br>
+					השתמשנו בפונקציה -  dialog על מנת לייצר את החלון המודולרי 
+					<br>
+					<b>קשיים:</b>
+					<br>
+					1. התוכנה לא מספקת פידבק של שגיאות ולא ניתן לבצע דיבאג בקלות
+					<br>
+					2. בנוסף התקשנו בפונקצינאליות של ה-about בשלב שבו היה צריך לצאת מהחלון ע"י לחיצה מחוץ לחלון
+					<br>
+				</p>
 			</div>
 
 			<div class="screen" id="game_page">
-				<div id="score">
-					<label for="lblScore">SCORE:</label>
-					<input id="lblScore" type="text" />
+				<div class="left_box">
+					<div id="score"> 
+						<label for="lblScore">SCORE:</label>
+						<input id="lblScore" type="text" readonly/>
+					</div>
+					<br>
+					<div id="time">
+						<label for="lblTime">TIME:</label>
+						<input id="lblTime" type="text" maxlength="4" readonly/>
+					</div>
+					<br>
+					<div id="strikes"> 
+						<label for="lblstrikes">LIVES:</label>
+						<input id="lblstrikes" type="text" readonly/>
+					</div>
 				</div>
-				<div id="time">
-					<label for="lblTime">TIME:</label>
-					<input id="lblTime" type="text" />
+				<div  class="middle_box" id="game"> 
+					<h2 id="userToPut2"></h2>
+					<canvas id="canvas" height="1000" width="1000"></canvas>
+					<br>
+					<button type="button" onclick="GameExit()">Exit</button>
+					<button type="button" onclick="NewGame()">New game</button>
 				</div>
-				<div id="game">
-					<canvas id="canvas" height="600" width="600"></canvas>
+				<div  class="right_box" id="setting_info"> 
+					<form action="">
+						<label for="up_arrow">&uarr;</label>
+						<input type="text" id="up_arrow" readonly>
+						<br>
+						<label for="down_arrow">&darr;</label>
+						<input type="text" id="down_arrow" readonly>
+						<br>
+						<label for="right_arrow">&rarr;</label>
+						<input type="text" id="right_arrow" readonly>
+						<br>
+						<label for="left_arrow">&larr;</label>
+						<input type="text" id="left_arrow" readonly>
+						<br>
+						<label for="food1_color">food1</label>
+						<input type="color" id="food1_color" disabled>
+						<input type="text" id="food1_points" value="5 points" readonly>
+						<br>
+						<label for="food2_color">food2</label>
+						<input type="color" id="food2_color" disabled>
+						<input type="text" id="food2_points" value="15 points" readonly>
+						<br>
+						<label for="food3_color">food3</label>
+						<input type="color" id="food3_color" disabled>
+						<input type="text" id="food3_points" value="25 points" readonly>
+						<br>
+						<label for="food_amount">Food amount</label>
+						<input type="text" id="food_amount" readonly>
+						<br>
+						<label for="time_count">Counter</label>
+						<input type="text" id="time_count" readonly>
+						<br>
+						<label for="monsters_amount">Monster's number</label>
+						<input type="text" id="monsters_amount" readonly>
+						<br>
+					</form>
 				</div>
-				<button type="button" onclick="Welcome()">Exit</button>
 			</div>
 				
 		</div>

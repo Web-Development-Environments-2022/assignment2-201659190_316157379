@@ -7,7 +7,6 @@ function Welcome()
 	{
 		GameExit();
 	}
-	// window.localStorage.clear();
 	if(current_user == "")
 	{
 		$(".screen").hide();

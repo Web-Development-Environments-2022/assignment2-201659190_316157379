@@ -20,7 +20,7 @@ var cnt;
 var cnt_squere;
 var timeToDecrease = 0.25;
 var hourGlass = new Image();
-hourGlass.src = "./Images/hourglass.PNG";
+hourGlass.src = "/Images/hourglass.PNG";
 hourGlass.onerror = function(){
 	alert("hourGlass img error");
 }
@@ -30,13 +30,13 @@ var ghost = new Object();
 var inGame = false;
 
 var heart = new Image();
-heart.src = "./Images/heart.PNG";
+heart.src = "/Images/heart.PNG";
 heart.onerror = function(){
 	alert("heart img error");
 }
 
 var chery = new Image();
-chery.src = "./Images/chery2.PNG";
+chery.src = "/Images/chery2.PNG";
 var chery_obj = new Object();
 chery_obj.img = chery;
 

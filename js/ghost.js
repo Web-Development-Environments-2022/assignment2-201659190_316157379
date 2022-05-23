@@ -20,25 +20,25 @@ var monstersLocation = [
 ];
 
 var ghost1 = new Image();
-ghost1.src = "./Images/red_ghost.png";
+ghost1.src = "./Images/red_ghost.PNG";
 ghost1.onerror = function(){
 	alert("img1 error");
 }
 
 var ghost2 = new Image();
-ghost2.src = "./Images/yellow_ghost.png";
+ghost2.src = "./Images/yellow_ghost.PNG";
 ghost2.onerror = function(){
 	alert("img2 error");
 }
 
 var ghost3 = new Image();
-ghost3.src = "./Images/blue_ghost.png";
+ghost3.src = "./Images/blue_ghost.PNG";
 ghost3.onerror = function(){
 	alert("img3 error");
 }
 
 var ghost4 = new Image();
-ghost4.src = "./Images/pink_ghost.png";
+ghost4.src = "./Images/pink_ghost.PNG";
 ghost4.onerror = function(){
 	alert("img4 error");
 }

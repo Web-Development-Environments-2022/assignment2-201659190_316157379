@@ -13,14 +13,14 @@ var food3Point = 25;
 var foods;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
-var music = new Audio("./audio/pacman2.wav");
-music.loop = true;
+// var music = new Audio("./audio/pacman2.WAV");
+// music.loop = true;
 var bonusTime = 10;
 var cnt;
 var cnt_squere;
 var timeToDecrease = 0.25;
 var hourGlass = new Image();
-hourGlass.src = "./Images/hourglass.png";
+hourGlass.src = "./Images/hourglass.PNG";
 hourGlass.onerror = function(){
 	alert("img error");
 }
@@ -30,13 +30,13 @@ var ghost = new Object();
 var inGame = false;
 
 var heart = new Image();
-heart.src = "./Images/heart.png";
+heart.src = "./Images/heart.PNG";
 heart.onerror = function(){
 	alert("img error");
 }
 
 var chery = new Image();
-chery.src = "./Images/chery2.png";
+chery.src = "./Images/chery2.PNG";
 var chery_obj = new Object();
 chery_obj.img = chery;
 
@@ -63,7 +63,7 @@ function Start()
 	// size of the matrix
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
-	music.play();
+	// music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -423,8 +423,8 @@ function UpdatePosition()
 	{
 		ClearAllInterval();
 		loseMessage()
-		music.pause();
-		music.currentTime = 0;
+		// music.pause();
+		// music.currentTime = 0;
 		Welcome();
 	}
 	// pacman get eaten by ghost
@@ -532,8 +532,8 @@ function loseMessage()
 function GameExit()
 {
 		ClearAllInterval()
-		music.pause();
-		music.currentTime = 0;
+		// music.pause();
+		// music.currentTime = 0;
 		inGame = false;
 		Welcome();
 }
@@ -541,8 +541,8 @@ function GameExit()
 function NewGame()
 {
 	ClearAllInterval()
-	music.pause();
-	music.currentTime = 0;
+	// music.pause();
+	// music.currentTime = 0;
 	inGame = false;
 	Game_page();
 }

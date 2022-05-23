@@ -22,7 +22,7 @@ var timeToDecrease = 0.25;
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.PNG";
 hourGlass.onerror = function(){
-	alert("img error");
+	alert("hourGlass img error");
 }
 var activeMonsters;
 var monsters;
@@ -32,7 +32,7 @@ var inGame = false;
 var heart = new Image();
 heart.src = "./Images/heart.PNG";
 heart.onerror = function(){
-	alert("img error");
+	alert("heart img error");
 }
 
 var chery = new Image();

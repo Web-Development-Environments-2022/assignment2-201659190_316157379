@@ -13,32 +13,32 @@ var food3Point = 25;
 var foods;
 var striks;
 var faceDirect = [30, 0.15 * Math.PI, 1.85 * Math.PI, 5, 15, 5, 0, 2 * Math.PI];
-// var music = new Audio("./audio/pacman2.wav");
-// music.loop = true;
+var music = new Audio("./audio/pacman2.wav");
+music.loop = true;
 var bonusTime = 10;
 var cnt;
 var cnt_squere;
 var timeToDecrease = 0.25;
 var hourGlass = new Image();
-// hourGlass.src = "./Images/hourglass.png";
-// hourGlass.onerror = function(){
-// 	alert("img error");
-// }
+hourGlass.src = "./Images/hourglass.png";
+hourGlass.onerror = function(){
+	alert("img error");
+}
 var activeMonsters;
 var monsters;
 var ghost = new Object();
 var inGame = false;
 
-// var heart = new Image();
-// heart.src = "./Images/heart.png";
-// heart.onerror = function(){
-// 	alert("img error");
-// }
+var heart = new Image();
+heart.src = "./Images/heart.png";
+heart.onerror = function(){
+	alert("img error");
+}
 
-// var chery = new Image();
-// chery.src = "./Images/chery2.png";
-// var chery_obj = new Object();
-// chery_obj.img = chery;
+var chery = new Image();
+chery.src = "./Images/chery2.png";
+var chery_obj = new Object();
+chery_obj.img = chery;
 
 
 
@@ -63,7 +63,7 @@ function Start()
 	// size of the matrix
 	cnt = 225;
 	cnt_squere = Math.sqrt(cnt);
-	// music.play();
+	music.play();
 	activeMonsters = new Array();
 	up_arrow.value = key_play.up;
 	down_arrow.value = key_play.down;
@@ -87,20 +87,20 @@ function Start()
 	food = game_food;
 
 	// configure the number of ghosts in the game
-	// for (let k=0; k < monsters; k++)
-	// {
-	// 	ghost = 
-	// 	{
-	// 		// ghosts configure in ghost js file
-	// 		image: ghosts[k],
-	// 		i: monstersLocation[k].i,
-	// 		j: monstersLocation[k].j
-	// 	};
-	// 	activeMonsters.push(ghost);
-	// }
-	//Add chery to center of canvas
-	// chery_obj.i = Math.floor(cnt_squere/2);
-	// chery_obj.j = Math.floor(cnt_squere/2);
+	for (let k=0; k < monsters; k++)
+	{
+		ghost = 
+		{
+			// ghosts configure in ghost js file
+			image: ghosts[k],
+			i: monstersLocation[k].i,
+			j: monstersLocation[k].j
+		};
+		activeMonsters.push(ghost);
+	}
+	// Add chery to center of canvas
+	chery_obj.i = Math.floor(cnt_squere/2);
+	chery_obj.j = Math.floor(cnt_squere/2);
 
 
 	for (let i = 0; i < cnt_squere; i++) 
@@ -110,13 +110,12 @@ function Start()
 		for (let j = 0; j < cnt_squere; j++) 
 		{
 			// 5 indicates ghost
-			// ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
-			// if(ghost !== undefined)
-			// {
-			// 	board[i][j] = 5;
-			// }
-			if ((i == 1 && j == 3 ) ||
-			// else if ((i == 1 && j == 3 ) ||
+			ghost = activeMonsters.find(obj => obj.i === i && obj.j === j);
+			if(ghost !== undefined)
+			{
+				board[i][j] = 5;
+			}
+			else if ((i == 1 && j == 3 ) ||
 			(i == 1 && j == 5 ) ||
 			(i == 3 && j == 3) ||
 			(i == 3 && j == 4) ||
@@ -232,13 +231,13 @@ function Start()
 	}
 
 	// add hourglass to canvas to add time to pacman if he eat it
-	// var emptyCell = findRandomEmptyCell(board);
-	// board[emptyCell[0]][emptyCell[1]] = 3;
+	var emptyCell = findRandomEmptyCell(board);
+	board[emptyCell[0]][emptyCell[1]] = 3;
 
 	
 	// add heart to canvas to add 1 strik to pacman if he eat it
-	// emptyCell = findRandomEmptyCell(board);
-	// board[emptyCell[0]][emptyCell[1]] = 7;
+	emptyCell = findRandomEmptyCell(board);
+	board[emptyCell[0]][emptyCell[1]] = 7;
 
 
 
@@ -343,10 +342,10 @@ function Draw() {
 				context.fill();
 			} 
 			// hourglass that grent time bonus
-			// else if (board[i][j] == 3) 
-			// {
-			// 		context.drawImage(hourGlass, center.x - 10, center.y - 15, 25, 35);
-			// }
+			else if (board[i][j] == 3) 
+			{
+					context.drawImage(hourGlass, center.x - 10, center.y - 15, 25, 35);
+			}
 			// shape and color of the wells
 			 else if (board[i][j] == 4) 
 			 {
@@ -355,22 +354,22 @@ function Draw() {
 				context.fillStyle = "black"; //color
 				context.fill();
 			}
-			// else if(board[i][j] == 5)
-			// {
-			// 	let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
-			// 	drawGhost(context, center, ghost_img);
-			// }
+			else if(board[i][j] == 5)
+			{
+				let ghost_img = (activeMonsters.find(obj => obj.i === i && obj.j === j)).image;
+				drawGhost(context, center, ghost_img);
+			}
 
 			// heart that grent time bonus
-			// else if (board[i][j] == 7) 
-			// {
-			// 	context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
-			// }
-			// // chery img
-			// if (chery_obj.i == i && chery_obj.j == j)
-			// {
-			// 	context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
-			// }
+			else if (board[i][j] == 7) 
+			{
+				context.drawImage(heart, center.x - 10, center.y - 15, 25, 35);
+			}
+			// chery img
+			if (chery_obj.i == i && chery_obj.j == j)
+			{
+				context.drawImage(chery_obj.img, center.x - 10, center.y - 15, 25, 35);
+			}
 			
 		
 		}
@@ -424,38 +423,38 @@ function UpdatePosition()
 	{
 		ClearAllInterval();
 		loseMessage()
-		// music.pause();
-		// music.currentTime = 0;
+		music.pause();
+		music.currentTime = 0;
 		Welcome();
 	}
 	// pacman get eaten by ghost
-	// else if(GetEaten())
-	// {
-	// 	ClearAllInterval();
-	// 	alert("you get eaten");
-	// 	if(score <= 10)
-	// 	{
-	// 		score = 0
-	// 	}
-	// 	else
-	// 	{
-	// 		score = score - 10;
-	// 	}
-	// 	striks--;
-	// 	lblstrikes.value = striks;
-	// 	resetGhostsLocation();
-	// 	if(striks == 0)
-	// 	{
-	// 		loseMessage();
-	// 		GameExit();
-	// 	}
-	// 	else
-	// 	{
-	// 		setAllInterval()
-	// 		time_elapsed = time_elapsed - timeToDecrease;
-	// 		Draw();
-	// 	}
-	// }
+	else if(GetEaten())
+	{
+		ClearAllInterval();
+		alert("you get eaten");
+		if(score <= 10)
+		{
+			score = 0
+		}
+		else
+		{
+			score = score - 10;
+		}
+		striks--;
+		lblstrikes.value = striks;
+		resetGhostsLocation();
+		if(striks == 0)
+		{
+			loseMessage();
+			GameExit();
+		}
+		else
+		{
+			setAllInterval()
+			time_elapsed = time_elapsed - timeToDecrease;
+			Draw();
+		}
+	}
 	else 
 	{
 	// score configuration
@@ -470,51 +469,51 @@ function UpdatePosition()
 			foods--;
 		}
 		//pacman get bonus time when he ate the hourglass
-		// else if(board[shape.i][shape.j] == 3)
-		// {
-		// 	time_elapsed = time_elapsed + bonusTime;
-		// }
-		// //pacman get bonus life when he ate the heart
-		// else if(board[shape.i][shape.j] == 7)
-		// {
-		// 	striks += 1;
-		// }
-		// if (shape.i == chery_obj.i && shape.j == chery_obj.j){
-		// 	PacmanEatChery();
-		// }
+		else if(board[shape.i][shape.j] == 3)
+		{
+			time_elapsed = time_elapsed + bonusTime;
+		}
+		//pacman get bonus life when he ate the heart
+		else if(board[shape.i][shape.j] == 7)
+		{
+			striks += 1;
+		}
+		if (shape.i == chery_obj.i && shape.j == chery_obj.j){
+			PacmanEatChery();
+		}
 		board[shape.i][shape.j] = 2;
 		time_elapsed = time_elapsed - timeToDecrease;
 		Draw();
 	}
 }
-// function UpdateChery(){
+function UpdateChery(){
 
-// 	var chery_row = chery_obj.i;
-// 	var chery_col = chery_obj.j;
-// 	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
+	var chery_row = chery_obj.i;
+	var chery_col = chery_obj.j;
+	var chery_dir = Math.floor(Math.random() * 4);// 0 - up | 1 - down | 2 - left | 3 - right 
 
-// 	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
-// 		chery_obj.j--;
-// 	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
-// 		chery_obj.j++;
-// 	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
-// 		chery_obj.i--;
-// 	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
-// 		chery_obj.i++;
-// 	}
+	if (chery_dir == 0 && chery_col > 0 && board[chery_row][chery_col - 1] != 4){
+		chery_obj.j--;
+	} else if(chery_dir == 1 && chery_col < cnt_squere - 1 && board[chery_row][chery_col + 1] != 4){
+		chery_obj.j++;
+	} else if(chery_dir == 2 && chery_row > 0 && board[chery_row - 1][chery_col] != 4){
+		chery_obj.i--;
+	} else if(chery_dir == 3 && chery_row < cnt_squere - 1 && board[chery_row + 1][chery_col] != 4){
+		chery_obj.i++;
+	}
 
-// 	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
-// 		PacmanEatChery();
-// 	}
+	if( (chery_obj.i == shape.i && chery_obj.j == shape.j) || board[chery_obj.i][chery_obj.j] == 2){
+		PacmanEatChery();
+	}
 	
-// }
-// function PacmanEatChery(){
+}
+function PacmanEatChery(){
 
-// 	window.clearInterval(intervalChery);
-// 	score = score + 50;
-// 	chery_obj.i = -1;
-// 	chery_obj.j = -1;
-// }
+	window.clearInterval(intervalChery);
+	score = score + 50;
+	chery_obj.i = -1;
+	chery_obj.j = -1;
+}
 
 function loseMessage()
 {
@@ -531,8 +530,8 @@ function loseMessage()
 function GameExit()
 {
 		ClearAllInterval()
-		// music.pause();
-		// music.currentTime = 0;
+		music.pause();
+		music.currentTime = 0;
 		inGame = false;
 		Welcome();
 }
@@ -540,8 +539,8 @@ function GameExit()
 function NewGame()
 {
 	ClearAllInterval()
-	// music.pause();
-	// music.currentTime = 0;
+	music.pause();
+	music.currentTime = 0;
 	inGame = false;
 	Game_page();
 }
@@ -549,13 +548,13 @@ function NewGame()
 function setAllInterval()
 {
 	interval = setInterval(UpdatePosition, 250);// 250
-	// intervalMonster = setInterval(GhostMove, 350);
-	// intervalChery = setInterval(UpdateChery, 250);
+	intervalMonster = setInterval(GhostMove, 350);
+	intervalChery = setInterval(UpdateChery, 250);
 }
 
 function ClearAllInterval()
 {
-	// window.clearInterval(intervalMonster);
-	// window.clearInterval(intervalChery);
+	window.clearInterval(intervalMonster);
+	window.clearInterval(intervalChery);
 	window.clearInterval(interval);
 }

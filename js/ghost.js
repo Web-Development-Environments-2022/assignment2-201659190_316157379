@@ -1,5 +1,4 @@
 var lastCell = [0, 0, 0, 0];
-// var lastSteps = [-1, -1, -1, -1];
 var monstersLocation = [
 	{
 		i: 0,
@@ -190,7 +189,8 @@ function resetGhostsLocation()
 {
 	for(var k = 0; k < monsters; k++)
 	{
-		if(lastCell[k] != 2 || lastCell[k] != 5)
+        // lastCell[k] != 2 ||
+		if( lastCell[k] != 5)
 		{
 			board[activeMonsters[k].i][activeMonsters[k].j] = lastCell[k];
 		}

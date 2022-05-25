@@ -19,6 +19,8 @@ var bonusTime = 10;
 var cnt;
 var cnt_squere;
 var timeToDecrease = 0.25;
+// make the cherry to appear only once in a game
+var cherryEated;
 var hourGlass = new Image();
 hourGlass.src = "./Images/hourglass.png";
 hourGlass.onerror = function(){
@@ -57,6 +59,7 @@ $(document).ready(function()
 
 function Start() 
 {
+	cherryEated = false
 	inGame = true;
 	foods = game_food;
 	pac_color = "yellow";
@@ -476,7 +479,8 @@ function UpdatePosition()
 		{
 			striks += 1;
 		}
-		if (shape.i == chery_obj.i && shape.j == chery_obj.j){
+		if (shape.i == chery_obj.i && shape.j == chery_obj.j)
+		{
 			PacmanEatChery();
 		}
 		board[shape.i][shape.j] = 2;
@@ -508,6 +512,7 @@ function UpdateChery(){
 function PacmanEatChery(){
 
 	window.clearInterval(intervalChery);
+	cherryEated = true;
 	score = score + 50;
 	chery_obj.i = -1;
 	chery_obj.j = -1;
@@ -547,12 +552,18 @@ function setAllInterval()
 {
 	interval = setInterval(UpdatePosition, 250);// 250
 	intervalMonster = setInterval(GhostMove, 350);
-	intervalChery = setInterval(UpdateChery, 250);
+	if(!cherryEated)
+	{
+		intervalChery = setInterval(UpdateChery, 350);
+	}
 }
 
 function ClearAllInterval()
 {
 	window.clearInterval(intervalMonster);
-	window.clearInterval(intervalChery);
+	if(!cherryEated)
+	{
+		window.clearInterval(intervalChery);
+	}
 	window.clearInterval(interval);
 }

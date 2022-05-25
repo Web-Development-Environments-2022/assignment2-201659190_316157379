@@ -288,7 +288,6 @@ function RandomSetting()
 
 /////////////////////// about section ///////////////////////////
 function About() {
-	window.clearInterval(interval);
 	$("#about_menu").dialog({
 		model: true,
 		title: "About",
